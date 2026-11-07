@@ -98,24 +98,25 @@ export const AuthModal: React.FC = () => {
 
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md animate-in fade-in">
       <div
         className={`relative w-full max-w-md rounded-2xl border p-6 sm:p-8 shadow-2xl overflow-hidden transition-colors ${
           isLight
-            ? 'bg-white border-slate-200 text-slate-900'
-            : 'bg-[#12131a] border-neutral-800 text-white'
+            ? 'bg-amber-50/95 border-amber-300 text-stone-900 shadow-orange-500/10'
+            : 'bg-[#140b07] border-orange-500/30 text-white shadow-2xl shadow-orange-950/60'
         }`}
       >
-        {/* Subtle ambient light */}
-        <div className="absolute -top-12 -right-12 w-40 h-40 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
+        {/* Halloween ambient amber glow */}
+        <div className="absolute -top-16 -right-16 w-48 h-48 bg-orange-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close Button */}
         <button
           onClick={() => setAuthModal(null)}
           className={`absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full border transition-colors ${
             isLight
-              ? 'border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-900'
-              : 'border-neutral-800 text-neutral-400 hover:bg-neutral-800 hover:text-white'
+              ? 'border-amber-300 text-stone-500 hover:bg-amber-100 hover:text-stone-900'
+              : 'border-orange-500/30 text-neutral-400 hover:bg-[#20110a] hover:text-[#ff6b00]'
           }`}
         >
           <X className="h-4 w-4" />
@@ -124,15 +125,15 @@ export const AuthModal: React.FC = () => {
         {/* Modal Header */}
         <div className="mb-6">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-blue-600" />
-            <span className="font-mono-code text-[10px] tracking-widest text-blue-600 font-bold uppercase">
-              NOIR ARCHIVE ACCESS
+            <span className="h-2 w-2 rounded-full bg-[#ff6b00] animate-pulse" />
+            <span className="font-mono-code text-[10px] tracking-widest text-[#ff6b00] font-bold uppercase">
+              🎃 NOIR ARCHIVE VAULT
             </span>
           </div>
-          <h2 className="mt-1 font-sans text-2xl font-bold">
-            {mode === 'signup' ? 'Create Unique Username' : 'Sign In'}
+          <h2 className="mt-1 font-sans text-2xl font-bold tracking-tight">
+            {mode === 'signup' ? 'Create Unique Username' : 'Enter the Crypt'}
           </h2>
-          <p className={`mt-1 font-sans text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+          <p className={`mt-1 font-sans text-xs ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
             {mode === 'signup'
               ? 'Claim your permanent unique handle (can only be registered once) and secure your account with a password.'
               : 'Sign in to access your projects, friends list, and client transfers.'}
@@ -142,7 +143,7 @@ export const AuthModal: React.FC = () => {
         {/* Mode Switcher Tabs */}
         <div
           className={`mb-6 grid grid-cols-2 rounded-full border p-1 font-mono-code text-xs ${
-            isLight ? 'bg-slate-100 border-slate-200' : 'bg-neutral-900 border-neutral-800'
+            isLight ? 'bg-amber-100/70 border-amber-300' : 'bg-[#1f1008] border-orange-500/30'
           }`}
         >
           <button
@@ -153,9 +154,9 @@ export const AuthModal: React.FC = () => {
             }}
             className={`py-1.5 rounded-full text-center transition-all font-medium ${
               mode === 'signup'
-                ? 'bg-blue-600 text-white shadow-sm'
+                ? 'bg-[#ff6b00] text-black font-bold shadow-md shadow-[#ff6b00]/30'
                 : isLight
-                ? 'text-slate-600 hover:text-slate-900'
+                ? 'text-stone-600 hover:text-stone-900'
                 : 'text-neutral-400 hover:text-white'
             }`}
           >
@@ -169,9 +170,9 @@ export const AuthModal: React.FC = () => {
             }}
             className={`py-1.5 rounded-full text-center transition-all font-medium ${
               mode === 'signin'
-                ? 'bg-blue-600 text-white shadow-sm'
+                ? 'bg-[#ff6b00] text-black font-bold shadow-md shadow-[#ff6b00]/30'
                 : isLight
-                ? 'text-slate-600 hover:text-slate-900'
+                ? 'text-stone-600 hover:text-stone-900'
                 : 'text-neutral-400 hover:text-white'
             }`}
           >
@@ -191,10 +192,10 @@ export const AuthModal: React.FC = () => {
           {/* Username Field */}
           <div>
             <label className="block font-mono-code text-[11px] uppercase tracking-wider font-semibold">
-              Unique Username <span className="text-blue-600">*</span>
+              Unique Username <span className="text-[#ff6b00]">*</span>
             </label>
             <div className="relative mt-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono-code text-xs opacity-60">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono-code text-xs text-[#ff6b00]">
                 @
               </span>
               <input
@@ -205,8 +206,8 @@ export const AuthModal: React.FC = () => {
                 aria-label="Username handle"
                 className={`w-full rounded-xl border py-2 pl-7 pr-3 font-mono-code text-xs focus:outline-none transition-colors ${
                   isLight
-                    ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
-                    : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
+                    ? 'bg-white border-amber-300 text-stone-900 focus:border-[#ff6b00]'
+                    : 'bg-[#1b0e08] border-orange-500/30 text-white focus:border-[#ff6b00]'
                 } ${
                   mode === 'signup' && usernameStatus
                     ? usernameStatus.isValid
@@ -243,7 +244,7 @@ export const AuthModal: React.FC = () => {
           {/* Password Field */}
           <div>
             <label className="block font-mono-code text-[11px] uppercase tracking-wider font-semibold">
-              Password <span className="text-blue-600">*</span>
+              Password <span className="text-[#ff6b00]">*</span>
             </label>
             <div className="relative mt-1">
               <input
@@ -254,14 +255,14 @@ export const AuthModal: React.FC = () => {
                 aria-label="Account password"
                 className={`w-full rounded-xl border py-2 pl-3 pr-10 font-mono-code text-xs focus:outline-none transition-colors ${
                   isLight
-                    ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
-                    : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
+                    ? 'bg-white border-amber-300 text-stone-900 focus:border-[#ff6b00]'
+                    : 'bg-[#1b0e08] border-orange-500/30 text-white focus:border-[#ff6b00]'
                 }`}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 text-[#ff6b00]"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
@@ -270,7 +271,7 @@ export const AuthModal: React.FC = () => {
             {/* Password strength meter for signup */}
             {mode === 'signup' && password.length > 0 && passwordStatus && (
               <div className="mt-2 space-y-1">
-                <div className="flex h-1 w-full gap-1 overflow-hidden bg-slate-200 dark:bg-neutral-800 rounded-full">
+                <div className="flex h-1 w-full gap-1 overflow-hidden bg-stone-200 dark:bg-stone-800 rounded-full">
                   {[1, 2, 3, 4].map(step => (
                     <div
                       key={step}
@@ -279,7 +280,7 @@ export const AuthModal: React.FC = () => {
                           ? passwordStatus.score < 2
                             ? 'bg-red-500'
                             : passwordStatus.score < 4
-                            ? 'bg-amber-500'
+                            ? 'bg-[#ff6b00]'
                             : 'bg-emerald-500'
                           : 'opacity-0'
                       }`}
@@ -295,13 +296,13 @@ export const AuthModal: React.FC = () => {
 
           {/* Optional Profile fields for signup */}
           {mode === 'signup' && (
-            <div className="space-y-3 border-t pt-3 border-slate-200 dark:border-neutral-800">
+            <div className="space-y-3 border-t pt-3 border-amber-200 dark:border-orange-500/20">
               <div>
                 <label className="block font-mono-code text-[10px] uppercase tracking-wider opacity-75">
                   Location (optional)
                 </label>
                 <div className="relative mt-1">
-                  <MapPin className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 opacity-50" />
+                  <MapPin className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#ff6b00] opacity-80" />
                   <input
                     type="text"
                     value={location}
@@ -309,8 +310,8 @@ export const AuthModal: React.FC = () => {
                     aria-label="Studio Location"
                     className={`w-full rounded-xl border py-1.5 pl-8 pr-3 font-mono-code text-xs focus:outline-none transition-colors ${
                       isLight
-                        ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
-                        : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
+                        ? 'bg-white border-amber-300 text-stone-900 focus:border-[#ff6b00]'
+                        : 'bg-[#1b0e08] border-orange-500/30 text-white focus:border-[#ff6b00]'
                     }`}
                   />
                 </div>
@@ -327,8 +328,8 @@ export const AuthModal: React.FC = () => {
                   aria-label="Artist bio and focus"
                   className={`w-full rounded-xl border py-1.5 px-3 text-xs focus:outline-none transition-colors ${
                     isLight
-                      ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
-                      : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
+                      ? 'bg-white border-amber-300 text-stone-900 focus:border-[#ff6b00]'
+                      : 'bg-[#1b0e08] border-orange-500/30 text-white focus:border-[#ff6b00]'
                   }`}
                 />
               </div>
@@ -338,7 +339,7 @@ export const AuthModal: React.FC = () => {
           {/* Submit Action */}
           <button
             type="submit"
-            className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 py-3 text-xs font-semibold text-white hover:bg-blue-500 transition-all shadow-md shadow-blue-600/30"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-[#ff6b00] py-3 text-xs font-bold text-black hover:bg-[#e05e00] transition-all shadow-lg shadow-[#ff6b00]/25 active:scale-[0.99]"
           >
             <ShieldCheck className="h-4 w-4" />
             <span>{mode === 'signup' ? 'Create Account & Claim Handle' : 'Sign In'}</span>
@@ -346,9 +347,9 @@ export const AuthModal: React.FC = () => {
         </form>
 
         {/* Security Notice */}
-        <div className="mt-6 border-t pt-4 border-slate-200 dark:border-neutral-800">
-          <p className="font-sans text-[11px] text-neutral-400">
-            🔒 Account credentials are encrypted. Your password is private and never visible to other users.
+        <div className="mt-6 border-t pt-4 border-amber-200/60 dark:border-orange-500/20">
+          <p className="font-sans text-[11px] text-stone-500 dark:text-neutral-400">
+            🔒 Account credentials are encrypted. Your password is encrypted and never revealed.
           </p>
         </div>
       </div>

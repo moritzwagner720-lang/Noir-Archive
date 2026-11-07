@@ -238,13 +238,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         if (theme === 'dark') {
           root.classList.add('dark');
           document.body.classList.add('dark');
-          document.body.style.backgroundColor = '#0a0a0f';
-          document.body.style.color = '#f8fafc';
+          document.body.style.backgroundColor = '#090503';
+          document.body.style.color = '#ffffff';
         } else {
           root.classList.remove('dark');
           document.body.classList.remove('dark');
-          document.body.style.backgroundColor = '#fbfbfd';
-          document.body.style.color = '#0f172a';
+          document.body.style.backgroundColor = '#fcf8f5';
+          document.body.style.color = '#1c1917';
         }
       }
     } catch (e) {

@@ -33,10 +33,10 @@ export const PhotoGrid: React.FC<{
   const isLight = theme === 'light';
 
   const categories: { label: string; value: 'all' | PhotoCategory; color: string }[] = [
-    { label: 'All Works', value: 'all', color: 'hover:text-blue-600' },
-    { label: 'Architecture', value: 'architecture', color: 'text-cyan-500' },
-    { label: 'Portraiture', value: 'portraiture', color: 'text-violet-500' },
-    { label: 'Street', value: 'street', color: 'text-amber-500' },
+    { label: 'All Works', value: 'all', color: 'hover:text-[#ff6b00]' },
+    { label: 'Architecture', value: 'architecture', color: 'text-orange-400' },
+    { label: 'Portraiture', value: 'portraiture', color: 'text-amber-500' },
+    { label: 'Street', value: 'street', color: 'text-[#ff6b00]' },
     { label: 'Nature', value: 'nature', color: 'text-emerald-500' },
     { label: 'Still Life', value: 'still-life', color: 'text-rose-500' },
   ];
@@ -122,14 +122,12 @@ export const PhotoGrid: React.FC<{
               <button
                 key={cat.value}
                 onClick={() => setSelectedCategory(cat.value)}
-                className={`px-3 py-1.5 text-xs font-mono-code uppercase tracking-wider rounded-lg transition-colors ${
+                className={`px-3 py-1.5 text-xs font-mono-code uppercase tracking-wider rounded-lg transition-all ${
                   selectedCategory === cat.value
-                    ? isLight
-                      ? 'bg-blue-50 text-blue-600 font-bold border-b-2 border-blue-600 shadow-sm'
-                      : 'bg-neutral-900 text-white font-bold border-b-2 border-blue-500 shadow-sm'
+                    ? 'bg-[#ff6b00] text-black font-bold shadow-sm'
                     : isLight
-                    ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                    : 'text-neutral-400 hover:text-white hover:bg-neutral-900/40'
+                    ? 'text-stone-600 hover:text-stone-900 hover:bg-amber-100/60'
+                    : 'text-neutral-400 hover:text-white hover:bg-[#180e0a]'
                 }`}
               >
                 {cat.label}
@@ -140,18 +138,18 @@ export const PhotoGrid: React.FC<{
           {/* Layout Switcher */}
           <div className="flex items-center gap-2 self-start md:self-auto">
             <span className="font-mono-code text-[10px] uppercase tracking-wider opacity-60 flex items-center gap-1 mr-1">
-              <SlidersHorizontal className="h-3 w-3 text-blue-600" />
+              <SlidersHorizontal className="h-3 w-3 text-[#ff6b00]" />
               Grid Mode:
             </span>
 
             <div className={`inline-flex rounded-lg border p-0.5 ${
-              isLight ? 'border-slate-200 bg-slate-100' : 'border-neutral-800 bg-neutral-950'
+              isLight ? 'border-amber-200 bg-amber-50' : 'border-orange-500/20 bg-[#160d09]'
             }`}>
               <button
                 onClick={() => setGridLayout('grid-2')}
                 title="2-Column Editorial View"
                 className={`p-1.5 rounded-md transition-colors ${
-                  gridLayout === 'grid-2' ? 'bg-blue-600 text-white' : 'opacity-60 hover:opacity-100'
+                  gridLayout === 'grid-2' ? 'bg-[#ff6b00] text-black' : 'opacity-60 hover:opacity-100'
                 }`}
               >
                 <Columns2 className="h-3.5 w-3.5" />
@@ -160,7 +158,7 @@ export const PhotoGrid: React.FC<{
                 onClick={() => setGridLayout('grid-3')}
                 title="3-Column Gallery View"
                 className={`p-1.5 rounded-md transition-colors ${
-                  gridLayout === 'grid-3' ? 'bg-blue-600 text-white' : 'opacity-60 hover:opacity-100'
+                  gridLayout === 'grid-3' ? 'bg-[#ff6b00] text-black' : 'opacity-60 hover:opacity-100'
                 }`}
               >
                 <Columns3 className="h-3.5 w-3.5" />
@@ -169,7 +167,7 @@ export const PhotoGrid: React.FC<{
                 onClick={() => setGridLayout('masonry')}
                 title="Masonry Flow"
                 className={`p-1.5 rounded-md transition-colors ${
-                  gridLayout === 'masonry' ? 'bg-blue-600 text-white' : 'opacity-60 hover:opacity-100'
+                  gridLayout === 'masonry' ? 'bg-[#ff6b00] text-black' : 'opacity-60 hover:opacity-100'
                 }`}
               >
                 <LayoutGrid className="h-3.5 w-3.5" />
@@ -178,7 +176,7 @@ export const PhotoGrid: React.FC<{
                 onClick={() => setGridLayout('contact-sheet')}
                 title="Analog Contact Sheet"
                 className={`p-1.5 rounded-md transition-colors ${
-                  gridLayout === 'contact-sheet' ? 'bg-blue-600 text-white' : 'opacity-60 hover:opacity-100'
+                  gridLayout === 'contact-sheet' ? 'bg-[#ff6b00] text-black' : 'opacity-60 hover:opacity-100'
                 }`}
               >
                 <Layers className="h-3.5 w-3.5" />
@@ -209,16 +207,16 @@ export const PhotoGrid: React.FC<{
                 key={photo.id}
                 className={`group relative overflow-hidden rounded-xl border transition-all duration-300 shadow-sm hover:shadow-md ${
                   isLight
-                    ? 'bg-white border-slate-200/90 hover:border-slate-300'
-                    : 'bg-[#12131a] border-neutral-900 hover:border-neutral-700'
+                    ? 'bg-amber-50/70 border-amber-200 hover:border-amber-400'
+                    : 'bg-[#140b07] border-orange-500/20 hover:border-orange-500/50'
                 } ${gridLayout === 'masonry' ? 'break-inside-avoid mb-6' : ''}`}
               >
                 {/* Contact Sheet Frame Header */}
                 {gridLayout === 'contact-sheet' && (
                   <div className={`flex items-center justify-between border-b px-2 py-1 font-mono-code text-[9px] ${
-                    isLight ? 'border-slate-200 bg-slate-50 text-slate-600' : 'border-neutral-800 bg-neutral-900 text-neutral-400'
+                    isLight ? 'border-amber-200 bg-amber-50 text-stone-600' : 'border-orange-500/20 bg-[#1b0e08] text-neutral-400'
                   }`}>
-                    <span className="text-blue-600 font-bold">ARCHIVAL</span>
+                    <span className="text-[#ff6b00] font-bold">ARCHIVAL</span>
                     <span>FRAME #{frameNum}</span>
                   </div>
                 )}
@@ -238,7 +236,7 @@ export const PhotoGrid: React.FC<{
                   />
 
                   {/* Darkroom Overlay on Hover */}
-                  <div className="absolute inset-0 flex flex-col justify-between bg-black/75 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-white">
+                  <div className="absolute inset-0 flex flex-col justify-between bg-black/80 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-white">
                     {/* Top Row: Camera Info & Category badge */}
                     <div className="flex items-start justify-between">
                       <span className={`font-mono-code text-[10px] tracking-wider px-2.5 py-0.5 rounded-full border ${getCategoryBadgeClass(photo.category)}`}>
@@ -251,7 +249,7 @@ export const PhotoGrid: React.FC<{
                             setIsTransferModalOpen(true);
                           }}
                           title="Send photo to recipient"
-                          className="flex h-7 w-7 items-center justify-center rounded-full border border-neutral-600 bg-black/80 text-white transition-colors hover:border-blue-400 hover:bg-blue-600"
+                          className="flex h-7 w-7 items-center justify-center rounded-full border border-neutral-600 bg-black/80 text-white transition-colors hover:border-[#ff6b00] hover:bg-[#ff6b00] hover:text-black"
                         >
                           <Send className="h-3 w-3" />
                         </button>
@@ -276,9 +274,9 @@ export const PhotoGrid: React.FC<{
                       <p className="mt-0.5 line-clamp-1 font-sans text-xs text-neutral-300">
                         {photo.caption}
                       </p>
-                      <div className="mt-2 flex items-center justify-between border-t border-neutral-800 pt-2 font-mono-code text-[10px] text-neutral-400">
+                      <div className="mt-2 flex items-center justify-between border-t border-orange-500/20 pt-2 font-mono-code text-[10px] text-neutral-400">
                         {author && (
-                          <span className="text-blue-400 font-semibold">
+                          <span className="text-[#ff6b00] font-semibold">
                             @{author.username}
                           </span>
                         )}
@@ -293,13 +291,13 @@ export const PhotoGrid: React.FC<{
                 {/* Sub-label for clean layout */}
                 {gridLayout !== 'contact-sheet' && (
                   <div className={`flex items-center justify-between border-t px-3.5 py-2.5 font-mono-code text-[11px] ${
-                    isLight ? 'border-slate-100 bg-white text-slate-800' : 'border-neutral-900 bg-[#12131a] text-neutral-300'
+                    isLight ? 'border-amber-200/50 bg-amber-50/50 text-stone-800' : 'border-orange-500/20 bg-[#160b07] text-neutral-300'
                   }`}>
                     <span className="truncate max-w-[65%] font-sans text-xs font-medium">
                       {photo.title}
                     </span>
                     {author && (
-                      <span className="text-blue-600 text-[10px] font-semibold">
+                      <span className="text-[#ff6b00] text-[10px] font-semibold">
                         @{author.username}
                       </span>
                     )}

@@ -92,25 +92,30 @@ export const AuthGate: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col justify-between transition-colors duration-200 ${
-        isLight ? 'bg-[#fbfbfd] text-slate-900' : 'bg-[#09090d] text-white'
+      className={`min-h-screen flex flex-col justify-between transition-colors duration-200 relative overflow-hidden ${
+        isLight ? 'bg-[#fcf8f5] text-stone-900' : 'bg-[#090503] text-white'
       }`}
     >
+      {/* Background Halloween Ember Glow */}
+      <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-[500px] w-[800px] rounded-full bg-[radial-gradient(circle,rgba(255,107,0,0.15)_0%,rgba(154,52,18,0.05)_50%,transparent_70%)] blur-[100px]" />
+
       {/* Top Bar with brand & theme toggle */}
       <header
         className={`border-b px-4 py-4 sm:px-8 transition-colors ${
-          isLight ? 'bg-white/80 border-slate-200' : 'bg-black/60 border-neutral-800'
-        } backdrop-blur-md`}
+          isLight ? 'bg-white/80 border-amber-200' : 'bg-[#0c0704]/80 border-orange-500/20'
+        } backdrop-blur-md relative z-10`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="h-3 w-3 rounded-full bg-blue-600 shadow-sm shadow-blue-500/50" />
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#ff6b00] text-black font-black text-xs shadow-md shadow-orange-950/60">
+              ✦
+            </span>
             <div>
               <span className="font-editorial text-lg tracking-widest font-semibold uppercase">
                 NOIR ARCHIVE
               </span>
-              <span className="hidden sm:inline-block ml-3 font-mono-code text-[11px] text-blue-600 uppercase tracking-widest font-semibold">
-                / AUTHENTICATION REQUIRED
+              <span className="hidden sm:inline-block ml-3 font-mono-code text-[11px] text-[#ff6b00] uppercase tracking-widest font-semibold">
+                / NOCTURNAL VAULT ENTRANCE
               </span>
             </div>
           </div>
@@ -120,19 +125,19 @@ export const AuthGate: React.FC = () => {
               onClick={toggleTheme}
               className={`flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono-code text-xs transition-colors ${
                 isLight
-                  ? 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  : 'border-neutral-700 bg-neutral-900 text-neutral-300 hover:bg-neutral-800'
+                  ? 'border-amber-300 bg-amber-50 text-stone-700 hover:bg-amber-100'
+                  : 'border-orange-500/30 bg-[#160d09] text-orange-200 hover:bg-[#1e110c]'
               }`}
             >
               {isLight ? (
                 <>
-                  <Moon className="h-3.5 w-3.5 text-blue-600" />
-                  <span>Dark Mode</span>
+                  <Moon className="h-3.5 w-3.5 text-stone-900" />
+                  <span>Dark Vault</span>
                 </>
               ) : (
                 <>
                   <Sun className="h-3.5 w-3.5 text-amber-400" />
-                  <span>Light Mode</span>
+                  <span>Dusk Mode</span>
                 </>
               )}
             </button>
@@ -141,45 +146,44 @@ export const AuthGate: React.FC = () => {
       </header>
 
       {/* Main Authentication Card */}
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <main className="flex-1 flex items-center justify-center px-4 py-12 relative z-10">
         <div className="w-full max-w-md">
           {/* Hero Banner text */}
           <div className="mb-6 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono-code text-[11px] uppercase tracking-wider mb-3 bg-blue-500/10 border-blue-500/30 text-blue-600">
+            <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono-code text-[11px] uppercase tracking-wider mb-3 bg-orange-500/10 border-orange-500/30 text-[#ff6b00]">
               <Shield className="h-3.5 w-3.5" />
               <span>Identity Verification</span>
             </div>
             <h1 className="font-sans text-2xl sm:text-3xl font-extrabold tracking-tight">
               {mode === 'signin' ? 'Sign In to Enter Archive' : 'Create Unique Username'}
             </h1>
-            <p className={`mt-2 font-sans text-xs max-w-sm mx-auto ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+            <p className={`mt-2 font-sans text-xs max-w-sm mx-auto ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
               {mode === 'signin'
                 ? 'Authentication is required before accessing photography portfolios, private transfers, and the darkroom messenger.'
                 : 'Claim your permanent unique handle (can only be registered once) and secure your account with a password.'}
             </p>
           </div>
 
-
           {/* Auth Card */}
           <div
             className={`rounded-2xl border p-6 sm:p-8 shadow-xl transition-colors ${
-              isLight ? 'bg-white border-slate-200' : 'bg-[#12131a] border-neutral-800'
+              isLight ? 'bg-white border-amber-200' : 'bg-[#130b08]/95 border-orange-500/25 shadow-[0_20px_60px_-15px_rgba(255,107,0,0.15)]'
             }`}
           >
             {/* Mode Switcher Tabs */}
             <div
-              className={`mb-6 grid grid-cols-2 rounded-full border p-1 font-mono-code text-xs ${
-                isLight ? 'bg-slate-100 border-slate-200' : 'bg-neutral-900 border-neutral-800'
+              className={`mb-6 grid grid-cols-2 rounded-lg border p-1 font-mono-code text-xs ${
+                isLight ? 'bg-amber-50 border-amber-200' : 'bg-[#1a0e0a] border-orange-500/20'
               }`}
             >
               <button
                 type="button"
                 onClick={() => setMode('signin')}
-                className={`rounded-full py-2 font-semibold transition-all ${
+                className={`rounded-md py-2 font-bold transition-all ${
                   mode === 'signin'
-                    ? 'bg-blue-600 text-white shadow-sm'
+                    ? 'bg-[#ff6b00] text-black shadow-sm'
                     : isLight
-                    ? 'text-slate-600 hover:text-slate-900'
+                    ? 'text-stone-600 hover:text-stone-900'
                     : 'text-neutral-400 hover:text-white'
                 }`}
               >
@@ -188,11 +192,11 @@ export const AuthGate: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setMode('signup')}
-                className={`rounded-full py-2 font-semibold transition-all ${
+                className={`rounded-md py-2 font-bold transition-all ${
                   mode === 'signup'
-                    ? 'bg-blue-600 text-white shadow-sm'
+                    ? 'bg-[#ff6b00] text-black shadow-sm'
                     : isLight
-                    ? 'text-slate-600 hover:text-slate-900'
+                    ? 'text-stone-600 hover:text-stone-900'
                     : 'text-neutral-400 hover:text-white'
                 }`}
               >
@@ -213,12 +217,12 @@ export const AuthGate: React.FC = () => {
               <div>
                 <label className="block font-mono-code text-xs font-semibold uppercase tracking-wider mb-1.5">
                   <span className="flex items-center gap-1.5">
-                    <UserIcon className="h-3.5 w-3.5 text-blue-600" />
+                    <UserIcon className="h-3.5 w-3.5 text-[#ff6b00]" />
                     <span>Username Handle</span>
                   </span>
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono-code text-xs font-bold text-blue-600">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono-code text-xs font-bold text-[#ff6b00]">
                     @
                   </span>
                   <input
@@ -227,10 +231,10 @@ export const AuthGate: React.FC = () => {
                     value={username}
                     onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
                     aria-label="Username Handle"
-                    className={`w-full rounded-xl border py-2.5 pl-8 pr-3 font-mono-code text-xs transition-colors focus:border-blue-600 focus:outline-none ${
+                    className={`w-full rounded-xl border py-2.5 pl-8 pr-3 font-mono-code text-xs transition-colors focus:border-[#ff6b00] focus:outline-none ${
                       isLight
-                        ? 'bg-slate-50 border-slate-300 text-slate-900'
-                        : 'bg-neutral-900 border-neutral-700 text-white'
+                        ? 'bg-amber-50/50 border-amber-300 text-stone-900'
+                        : 'bg-[#180e0a] border-orange-500/30 text-white'
                     }`}
                   />
                 </div>
@@ -255,7 +259,7 @@ export const AuthGate: React.FC = () => {
               <div>
                 <label className="block font-mono-code text-xs font-semibold uppercase tracking-wider mb-1.5">
                   <span className="flex items-center gap-1.5">
-                    <Lock className="h-3.5 w-3.5 text-blue-600" />
+                    <Lock className="h-3.5 w-3.5 text-[#ff6b00]" />
                     <span>Password</span>
                   </span>
                 </label>
@@ -266,10 +270,10 @@ export const AuthGate: React.FC = () => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     aria-label="Account Password"
-                    className={`w-full rounded-xl border py-2.5 pl-3.5 pr-10 font-mono-code text-xs transition-colors focus:border-blue-600 focus:outline-none ${
+                    className={`w-full rounded-xl border py-2.5 pl-3.5 pr-10 font-mono-code text-xs transition-colors focus:border-[#ff6b00] focus:outline-none ${
                       isLight
-                        ? 'bg-slate-50 border-slate-300 text-slate-900'
-                        : 'bg-neutral-900 border-neutral-700 text-white'
+                        ? 'bg-amber-50/50 border-amber-300 text-stone-900'
+                        : 'bg-[#180e0a] border-orange-500/30 text-white'
                     }`}
                   />
                   <button
@@ -277,7 +281,7 @@ export const AuthGate: React.FC = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                     className={`absolute right-3 top-1/2 -translate-y-1/2 transition-colors ${
-                      isLight ? 'text-slate-400 hover:text-slate-700' : 'text-neutral-500 hover:text-white'
+                      isLight ? 'text-stone-400 hover:text-stone-700' : 'text-neutral-500 hover:text-white'
                     }`}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -322,7 +326,7 @@ export const AuthGate: React.FC = () => {
                   <div>
                     <label className="block font-mono-code text-xs font-semibold uppercase tracking-wider mb-1.5">
                       <span className="flex items-center gap-1.5">
-                        <MapPin className="h-3.5 w-3.5 text-blue-600" />
+                        <MapPin className="h-3.5 w-3.5 text-[#ff6b00]" />
                         <span>Studio Location (Optional)</span>
                       </span>
                     </label>
@@ -331,10 +335,10 @@ export const AuthGate: React.FC = () => {
                       value={location}
                       onChange={e => setLocation(e.target.value)}
                       aria-label="Studio Location"
-                      className={`w-full rounded-xl border py-2.5 px-3.5 font-mono-code text-xs transition-colors focus:border-blue-600 focus:outline-none ${
+                      className={`w-full rounded-xl border py-2.5 px-3.5 font-mono-code text-xs transition-colors focus:border-[#ff6b00] focus:outline-none ${
                         isLight
-                          ? 'bg-slate-50 border-slate-300 text-slate-900'
-                          : 'bg-neutral-900 border-neutral-700 text-white'
+                          ? 'bg-amber-50/50 border-amber-300 text-stone-900'
+                          : 'bg-[#180e0a] border-orange-500/30 text-white'
                       }`}
                     />
                   </div>
@@ -342,7 +346,7 @@ export const AuthGate: React.FC = () => {
                   <div>
                     <label className="block font-mono-code text-xs font-semibold uppercase tracking-wider mb-1.5">
                       <span className="flex items-center gap-1.5">
-                        <FileText className="h-3.5 w-3.5 text-blue-600" />
+                        <FileText className="h-3.5 w-3.5 text-[#ff6b00]" />
                         <span>Artist Statement / Bio (Optional)</span>
                       </span>
                     </label>
@@ -351,10 +355,10 @@ export const AuthGate: React.FC = () => {
                       value={bio}
                       onChange={e => setBio(e.target.value)}
                       aria-label="Artist Statement and Bio"
-                      className={`w-full rounded-xl border py-2.5 px-3.5 font-sans text-xs transition-colors focus:border-blue-600 focus:outline-none resize-none ${
+                      className={`w-full rounded-xl border py-2.5 px-3.5 font-sans text-xs transition-colors focus:border-[#ff6b00] focus:outline-none resize-none ${
                         isLight
-                          ? 'bg-slate-50 border-slate-300 text-slate-900'
-                          : 'bg-neutral-900 border-neutral-700 text-white'
+                          ? 'bg-amber-50/50 border-amber-300 text-stone-900'
+                          : 'bg-[#180e0a] border-orange-500/30 text-white'
                       }`}
                     />
                   </div>
@@ -364,20 +368,20 @@ export const AuthGate: React.FC = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 font-sans text-xs font-semibold text-white shadow-lg shadow-blue-600/30 transition-all hover:bg-blue-500 hover:scale-[1.01] active:scale-[0.99]"
+                className="w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#ff6b00] py-3 font-sans text-xs font-bold text-black shadow-lg shadow-orange-950/50 transition-all hover:bg-[#ff7d1f] hover:scale-[1.01] active:scale-[0.99]"
               >
                 <span>{mode === 'signin' ? 'Sign In & Access Archive' : 'Register Handle & Enter'}</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 stroke-[2.5]" />
               </button>
             </form>
 
             {/* Security Notice */}
             <div
               className={`mt-6 border-t pt-4 ${
-                isLight ? 'border-slate-200 text-slate-500' : 'border-neutral-800 text-neutral-400'
+                isLight ? 'border-amber-200 text-stone-500' : 'border-orange-500/20 text-neutral-400'
               }`}
             >
-              <div className="flex items-center gap-1.5 font-mono-code text-[11px] font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              <div className="flex items-center gap-1.5 font-mono-code text-[11px] font-semibold text-[#ff6b00] uppercase tracking-wider mb-1">
                 <Lock className="h-3.5 w-3.5" />
                 <span>Protected Archive Access</span>
               </div>

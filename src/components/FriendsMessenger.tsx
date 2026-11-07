@@ -61,19 +61,19 @@ export const FriendsMessenger: React.FC = () => {
         <div
           className={`rounded-2xl border p-8 shadow-xl relative overflow-hidden transition-colors ${
             isLight
-              ? 'bg-white border-slate-200 text-slate-900'
-              : 'bg-[#12131a] border-neutral-800 text-white'
+              ? 'bg-amber-50/90 border-amber-300 text-stone-900 shadow-orange-500/10'
+              : 'bg-[#140b07] border-orange-500/30 text-white shadow-2xl shadow-orange-950/60'
           }`}
         >
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-blue-600/10 rounded-full blur-2xl" />
-          <UserPlus className="mx-auto mb-3 h-10 w-10 text-blue-600" />
-          <h2 className="font-sans text-2xl font-bold">Friends & Direct Peer File Messenger</h2>
-          <p className={`mt-2 text-xs max-w-md mx-auto ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-            Connect with other creators, send friend requests by username, and exchange high-resolution files and folders directly inside live chat.
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-orange-600/15 rounded-full blur-2xl" />
+          <UserPlus className="mx-auto mb-3 h-10 w-10 text-[#ff6b00]" />
+          <h2 className="font-sans text-2xl font-bold tracking-tight">Coven Friends & Peer Vault Messenger</h2>
+          <p className={`mt-2 text-xs max-w-md mx-auto ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
+            Connect with other creators, send requests by username, and exchange high-resolution files and folders directly inside live chat.
           </p>
           <button
             onClick={() => setAuthModal('signup')}
-            className="mt-5 rounded-full bg-blue-600 px-6 py-2.5 text-xs font-semibold text-white hover:bg-blue-500 transition-all shadow-md shadow-blue-600/25"
+            className="mt-5 rounded-xl bg-[#ff6b00] px-6 py-2.5 text-xs font-bold text-black hover:bg-[#e05e00] transition-all shadow-md shadow-[#ff6b00]/25"
           >
             Claim Username & Join Friends
           </button>
@@ -299,15 +299,15 @@ export const FriendsMessenger: React.FC = () => {
       }`}>
         <div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
-            <span className="font-mono-code text-[11px] font-bold uppercase tracking-wider text-blue-600">
+            <span className="h-2 w-2 rounded-full bg-[#ff6b00] animate-pulse" />
+            <span className="font-mono-code text-[11px] font-bold uppercase tracking-wider text-[#ff6b00]">
               PEER MESSAGING & FILE EXCHANGE
             </span>
           </div>
           <h2 className="mt-1 font-sans text-2xl font-bold tracking-tight sm:text-3xl">
             Add Friends & Direct File Transfer
           </h2>
-          <p className={`mt-1 text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+          <p className={`mt-1 text-xs ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
             Send friend requests to creators, chat in real-time, and transfer files or folders directly in conversation.
           </p>
         </div>
@@ -317,24 +317,24 @@ export const FriendsMessenger: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsRequestsModalOpen(true)}
-            className={`flex items-center gap-2 rounded-full border px-4 py-1.5 font-sans text-xs font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 rounded-lg border px-4 py-1.5 font-sans text-xs font-semibold transition-all cursor-pointer ${
               pendingIncoming.length > 0
-                ? 'border-blue-500 bg-blue-600/10 text-blue-600 dark:text-blue-400 hover:bg-blue-600/20 shadow-sm shadow-blue-600/20'
+                ? 'border-orange-500 bg-orange-600/15 text-[#ff6b00] hover:bg-orange-600/25 shadow-sm shadow-orange-950/40'
                 : isLight
-                ? 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400'
-                : 'border-neutral-800 bg-neutral-900/90 text-neutral-300 hover:bg-neutral-800 hover:border-neutral-700'
+                ? 'border-amber-300 bg-white text-stone-700 hover:bg-amber-50 hover:border-amber-400'
+                : 'border-orange-500/30 bg-[#160d09] text-orange-200 hover:bg-[#1f120c] hover:border-orange-500/50'
             }`}
           >
-            <Users className="h-3.5 w-3.5 text-blue-600" />
+            <Users className="h-3.5 w-3.5 text-[#ff6b00]" />
             <span>Friend Requests</span>
             {pendingIncoming.length > 0 ? (
-              <span className="flex h-5 items-center justify-center rounded-full bg-blue-600 px-2 text-[10px] font-bold text-white animate-pulse">
+              <span className="flex h-5 items-center justify-center rounded-full bg-[#ff6b00] px-2 text-[10px] font-bold text-black animate-pulse">
                 {pendingIncoming.length} new
               </span>
             ) : pendingSent.length > 0 ? (
               <span
                 className={`flex h-4 items-center justify-center rounded-full px-1.5 text-[10px] ${
-                  isLight ? 'bg-slate-200 text-slate-600' : 'bg-neutral-800 text-neutral-400'
+                  isLight ? 'bg-amber-100 text-stone-600' : 'bg-[#22130c] text-orange-300'
                 }`}
               >
                 {pendingSent.length} sent
@@ -345,7 +345,7 @@ export const FriendsMessenger: React.FC = () => {
           {/* Add Friend Form */}
           <form onSubmit={handleSendFriendRequest} className="flex items-center gap-2">
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono-code text-xs text-slate-400">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono-code text-xs text-[#ff6b00]">
                 @
               </span>
               <input
@@ -354,18 +354,18 @@ export const FriendsMessenger: React.FC = () => {
                 value={addFriendInput}
                 onChange={e => setAddFriendInput(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
                 aria-label="Add friend by username handle"
-                className={`w-48 sm:w-56 rounded-full border py-2 pl-7 pr-3 font-mono-code text-xs focus:border-blue-600 focus:outline-none transition-colors ${
+                className={`w-48 sm:w-56 rounded-lg border py-2 pl-7 pr-3 font-mono-code text-xs focus:border-[#ff6b00] focus:outline-none transition-colors ${
                   isLight
-                    ? 'bg-white border-slate-300 text-slate-900'
-                    : 'bg-neutral-900 border-neutral-700 text-white'
+                    ? 'bg-white border-amber-300 text-stone-900'
+                    : 'bg-[#160d09] border-orange-500/30 text-white placeholder:text-neutral-500'
                 }`}
               />
             </div>
             <button
               type="submit"
-              className="flex items-center gap-1.5 rounded-full bg-blue-600 px-5 py-2 font-sans text-xs font-semibold text-white hover:bg-blue-500 transition-all shadow-md shadow-blue-600/25 cursor-pointer"
+              className="flex items-center gap-1.5 rounded-lg bg-[#ff6b00] px-5 py-2 font-sans text-xs font-bold text-black hover:bg-[#ff7d1f] transition-all shadow-md shadow-orange-950/40 cursor-pointer"
             >
-              <UserPlus className="h-3.5 w-3.5" />
+              <UserPlus className="h-3.5 w-3.5 stroke-[2.5]" />
               <span>Add Friend</span>
             </button>
           </form>
@@ -393,9 +393,9 @@ export const FriendsMessenger: React.FC = () => {
       {/* Pending Incoming Requests Banner */}
       {pendingIncoming.length > 0 && (
         <div className={`mb-6 rounded-2xl border p-4 ${
-          isLight ? 'border-blue-200 bg-blue-50/60' : 'border-blue-900/50 bg-blue-950/20'
+          isLight ? 'border-amber-300 bg-amber-50/60' : 'border-orange-500/30 bg-orange-950/20'
         }`}>
-          <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 uppercase tracking-wider mb-2">
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#ff6b00] uppercase tracking-wider mb-2">
             <UserPlus className="h-4 w-4" />
             <span>Incoming Friend Requests ({pendingIncoming.length})</span>
           </div>
@@ -404,24 +404,24 @@ export const FriendsMessenger: React.FC = () => {
               <div
                 key={req.id}
                 className={`flex items-center justify-between p-3 rounded-xl border ${
-                  isLight ? 'bg-white border-slate-200' : 'bg-neutral-900 border-neutral-800'
+                  isLight ? 'bg-white border-amber-200' : 'bg-[#180e0a] border-orange-500/25'
                 }`}
               >
                 <div className="flex items-center gap-2 font-mono-code text-xs">
-                  <span className="font-semibold text-blue-600">@{req.fromUsername}</span>
+                  <span className="font-bold text-[#ff6b00]">@{req.fromUsername}</span>
                   <span className="opacity-70">wants to connect with you</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => acceptFriendRequestAction(req.id)}
-                    className="rounded-full bg-emerald-600 px-3.5 py-1 text-xs font-semibold text-white hover:bg-emerald-500 shadow-sm"
+                    className="rounded-lg bg-emerald-600 px-3.5 py-1 text-xs font-semibold text-white hover:bg-emerald-500 shadow-sm"
                   >
                     Accept
                   </button>
                   <button
                     onClick={() => declineFriendRequestAction(req.id)}
-                    className={`rounded-full px-3 py-1 text-xs border transition-colors ${
-                      isLight ? 'border-slate-300 text-slate-600 hover:bg-slate-100' : 'border-neutral-700 text-neutral-400 hover:bg-neutral-800'
+                    className={`rounded-lg px-3 py-1 text-xs border transition-colors ${
+                      isLight ? 'border-amber-300 text-stone-600 hover:bg-amber-100' : 'border-orange-500/30 text-neutral-400 hover:bg-[#22130c]'
                     }`}
                   >
                     Decline
@@ -450,7 +450,7 @@ export const FriendsMessenger: React.FC = () => {
           <div>
             <div className={`p-4 border-b flex items-center justify-between ${isLight ? 'border-slate-200' : 'border-neutral-800'}`}>
               <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-blue-600" />
+                <Users className="h-4 w-4 text-[#ff6b00]" />
                 <span className="font-sans text-xs font-bold uppercase tracking-wider">
                   Friends ({friendsList.length})
                 </span>
@@ -463,7 +463,7 @@ export const FriendsMessenger: React.FC = () => {
               <div className="p-8 text-center opacity-60 font-mono-code text-xs">
                 <p>No friends added yet.</p>
                 <p className="mt-1 text-[11px]">
-                  Type a username above like <span className="text-blue-600">@elena_k</span> to send a request!
+                  Type a username above like <span className="text-[#ff6b00]">@elena_k</span> to send a request!
                 </p>
               </div>
             ) : (
@@ -500,11 +500,11 @@ export const FriendsMessenger: React.FC = () => {
                       className={`w-full flex items-center justify-between p-3.5 text-left transition-colors ${
                         isSelected
                           ? isLight
-                            ? 'bg-blue-50/80 border-l-4 border-blue-600'
-                            : 'bg-blue-950/30 border-l-4 border-blue-500'
+                            ? 'bg-amber-100/70 border-l-2 border-[#ff6b00]'
+                            : 'bg-[#22120a] border-l-2 border-[#ff6b00]'
                           : isLight
-                          ? 'hover:bg-slate-100/70'
-                          : 'hover:bg-neutral-900/40'
+                          ? 'hover:bg-amber-50'
+                          : 'hover:bg-[#180e0a]'
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
@@ -515,13 +515,13 @@ export const FriendsMessenger: React.FC = () => {
                               'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
                             }
                             alt={handle}
-                            className="h-9 w-9 rounded-full object-cover ring-1 ring-slate-300 dark:ring-neutral-700"
+                            className="h-9 w-9 rounded-full object-cover ring-1 ring-orange-500/40"
                           />
-                          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-black" />
+                          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-[#ff6b00] ring-2 ring-white dark:ring-black" />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-1">
-                            <p className="font-mono-code text-xs font-semibold truncate">
+                            <p className={`font-mono-code text-xs font-semibold truncate ${isLight ? 'text-stone-900' : 'text-orange-100'}`}>
                               @{handle}
                             </p>
                             {timeStr && (
@@ -531,7 +531,7 @@ export const FriendsMessenger: React.FC = () => {
                             )}
                           </div>
                           <p className={`font-sans text-[11px] truncate ${
-                            hasUnread ? 'font-semibold text-blue-600 dark:text-blue-400' : 'opacity-70'
+                            hasUnread ? 'font-bold text-[#ff6b00]' : 'opacity-70'
                           }`}>
                             {snippet}
                           </p>
@@ -540,9 +540,9 @@ export const FriendsMessenger: React.FC = () => {
 
                       <div className="flex items-center gap-1.5 shrink-0">
                         {hasUnread && (
-                          <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" title="New message" />
+                          <span className="h-2 w-2 rounded-full bg-[#ff6b00] animate-pulse" title="New message" />
                         )}
-                        <span className="font-mono-code text-[11px] text-blue-600 font-medium">
+                        <span className="font-mono-code text-[11px] text-[#ff6b00] font-bold">
                           Chat →
                         </span>
                       </div>
@@ -555,9 +555,9 @@ export const FriendsMessenger: React.FC = () => {
 
           {/* Quick Member Discovery Helper */}
           <div className={`p-3 border-t font-mono-code text-[10px] ${
-            isLight ? 'border-slate-200 bg-slate-100/70' : 'border-neutral-900 bg-neutral-950/80'
+            isLight ? 'border-amber-200 bg-amber-50/70' : 'border-orange-500/15 bg-[#140b07]'
           }`}>
-            <span className="block uppercase opacity-60 mb-1">Discover Platform Creators:</span>
+            <span className="block uppercase opacity-60 mb-1 text-orange-300">Discover Platform Creators:</span>
             <div className="flex flex-wrap gap-1">
               {users
                 .filter(u => u.username !== currentUser.username && !friendsList.includes(u.username))
@@ -579,10 +579,10 @@ export const FriendsMessenger: React.FC = () => {
                       }
                       setTimeout(() => setRequestFeedback(null), 4000);
                     }}
-                    className={`rounded-full px-2.5 py-0.5 border text-[10px] transition-colors ${
+                    className={`rounded-lg px-2.5 py-0.5 border text-[10px] transition-colors ${
                       isLight
-                        ? 'border-slate-300 bg-white hover:border-blue-500 hover:text-blue-600'
-                        : 'border-neutral-800 bg-neutral-900 hover:border-blue-400 hover:text-white'
+                        ? 'border-amber-300 bg-white hover:border-orange-500 hover:text-orange-600'
+                        : 'border-orange-500/20 bg-[#1c0f0a] hover:border-[#ff6b00] hover:text-white'
                     }`}
                   >
                     + @{u.username}
@@ -598,28 +598,28 @@ export const FriendsMessenger: React.FC = () => {
             <>
               {/* Chat Header */}
               <div className={`p-3.5 border-b flex items-center justify-between ${
-                isLight ? 'border-slate-200 bg-slate-50/70' : 'border-neutral-800 bg-neutral-900/50'
+                isLight ? 'border-amber-200 bg-amber-50/50' : 'border-orange-500/15 bg-[#140b07]'
               }`}>
                 <div className="flex items-center gap-2.5">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  <span className="font-mono-code text-xs font-semibold">
+                  <span className="h-2 w-2 rounded-full bg-[#ff6b00]" />
+                  <span className={`font-mono-code text-xs font-semibold ${isLight ? 'text-stone-900' : 'text-orange-100'}`}>
                     @{activeChatFriend}
                   </span>
                   <span className="font-mono-code text-[10px] opacity-60">
-                    • Live Peer Channel
+                    • Nocturnal Peer Channel
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowFolderModal(true)}
-                    className={`flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono-code text-[11px] transition-colors ${
+                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1 font-mono-code text-[11px] transition-colors ${
                       isLight
-                        ? 'border-slate-300 bg-white hover:border-blue-600 hover:text-blue-600'
-                        : 'border-neutral-700 bg-neutral-900 hover:border-white'
+                        ? 'border-amber-300 bg-white hover:border-[#ff6b00] hover:text-[#ff6b00]'
+                        : 'border-orange-500/30 bg-[#1e110c] hover:border-orange-400 text-orange-200'
                     }`}
                   >
-                    <Folder className="h-3 w-3 text-cyan-500" />
+                    <Folder className="h-3 w-3 text-[#ff6b00]" />
                     <span>Send Folder</span>
                   </button>
                 </div>
@@ -629,7 +629,7 @@ export const FriendsMessenger: React.FC = () => {
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {conversationMessages.length === 0 ? (
                   <div className="flex h-full flex-col items-center justify-center text-center opacity-60 font-mono-code text-xs">
-                    <MessageSquare className="h-8 w-8 mb-2 opacity-50" />
+                    <MessageSquare className="h-8 w-8 mb-2 opacity-50 text-orange-400" />
                     <p>Start a conversation with @{activeChatFriend}</p>
                     <p className="text-[11px] mt-1">
                       Use the "+" icon on the right of the typing bar to send files or entire folders.
@@ -655,10 +655,10 @@ export const FriendsMessenger: React.FC = () => {
                           <div
                             className={`max-w-md rounded-2xl px-4 py-2 text-xs font-sans leading-relaxed shadow-sm ${
                               isMe
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-[#ff6b00] text-black font-semibold shadow-md shadow-orange-950/40'
                                 : isLight
-                                ? 'bg-slate-100 border border-slate-200 text-slate-900'
-                                : 'bg-neutral-900 border border-neutral-800 text-neutral-200'
+                                ? 'bg-amber-100/80 border border-amber-200 text-stone-900'
+                                : 'bg-[#180e0a] border border-orange-500/25 text-neutral-200'
                             }`}
                           >
                             {msg.text}
@@ -669,25 +669,21 @@ export const FriendsMessenger: React.FC = () => {
                         {msg.attachment && (
                           <div
                             className={`mt-1.5 max-w-sm rounded-xl border p-3 shadow-sm ${
-                              msg.attachment.type === 'folder'
-                                ? isLight
-                                  ? 'border-cyan-300 bg-cyan-50/60'
-                                  : 'border-cyan-500/40 bg-cyan-950/20'
-                                : isLight
-                                ? 'border-blue-200 bg-blue-50/60'
-                                : 'border-blue-500/40 bg-blue-950/20'
+                              isLight
+                                ? 'border-amber-300 bg-amber-50'
+                                : 'border-orange-500/30 bg-[#1c0f0a]'
                             }`}
                           >
                             <div className="flex items-center justify-between mb-2">
-                              <span className="flex items-center gap-1.5 font-mono-code text-[10px] uppercase font-bold text-blue-600">
+                              <span className="flex items-center gap-1.5 font-mono-code text-[10px] uppercase font-bold text-[#ff6b00]">
                                 {msg.attachment.type === 'folder' ? (
                                   <>
-                                    <Folder className="h-3.5 w-3.5 text-cyan-600" />
+                                    <Folder className="h-3.5 w-3.5 text-[#ff6b00]" />
                                     <span>Folder: {msg.attachment.title}</span>
                                   </>
                                 ) : (
                                   <>
-                                    <FileImage className="h-3.5 w-3.5 text-blue-600" />
+                                    <FileImage className="h-3.5 w-3.5 text-[#ff6b00]" />
                                     <span>File: {msg.attachment.title}</span>
                                   </>
                                 )}
@@ -718,7 +714,7 @@ export const FriendsMessenger: React.FC = () => {
                             </div>
 
                             {/* Download Action */}
-                            <div className="mt-2 flex items-center justify-between pt-2 border-t border-slate-200 dark:border-neutral-800">
+                            <div className="mt-2 flex items-center justify-between pt-2 border-t border-orange-500/20">
                               <span className="font-mono-code text-[10px] opacity-70">
                                 {msg.attachment.files.length} {msg.attachment.files.length === 1 ? 'asset' : 'assets'}
                               </span>
@@ -727,7 +723,7 @@ export const FriendsMessenger: React.FC = () => {
                                 <button
                                   onClick={() => msg.attachment && handleDownloadAttachmentZip(msg.attachment)}
                                   disabled={isZipping === msg.attachment.title}
-                                  className="flex items-center gap-1 rounded-full bg-cyan-600 px-3 py-1 font-mono-code text-[10px] font-semibold uppercase text-white hover:bg-cyan-500 transition-colors shadow-sm"
+                                  className="flex items-center gap-1 rounded-lg bg-[#ff6b00] px-3 py-1 font-mono-code text-[10px] font-bold uppercase text-black hover:bg-[#ff7d1f] transition-colors shadow-sm"
                                 >
                                   <FileArchive className="h-3 w-3" />
                                   <span>{isZipping === msg.attachment.title ? 'Zipping...' : 'Download (.ZIP)'}</span>
@@ -736,7 +732,7 @@ export const FriendsMessenger: React.FC = () => {
                                 <a
                                   href={msg.attachment.files[0]?.url}
                                   download={msg.attachment.files[0]?.name || 'download.jpg'}
-                                  className="flex items-center gap-1 rounded-full bg-blue-600 px-3 py-1 font-mono-code text-[10px] font-semibold uppercase text-white hover:bg-blue-500 transition-colors shadow-sm"
+                                  className="flex items-center gap-1 rounded-lg bg-[#ff6b00] px-3 py-1 font-mono-code text-[10px] font-bold uppercase text-black hover:bg-[#ff7d1f] transition-colors shadow-sm"
                                 >
                                   <Download className="h-3 w-3" />
                                   <span>Download</span>
@@ -754,18 +750,18 @@ export const FriendsMessenger: React.FC = () => {
 
               {/* Bottom Typing Bar with '+' button on the right side */}
               <div className={`p-3 border-t relative transition-colors ${
-                isLight ? 'border-slate-200 bg-slate-50/80' : 'border-neutral-800 bg-neutral-900/60'
+                isLight ? 'border-amber-200 bg-amber-50/70' : 'border-orange-500/15 bg-[#140b07]'
               }`}>
                 {/* Popover Attachment Menu when '+' is clicked */}
                 {showAttachMenu && (
                   <div
                     className={`absolute right-4 bottom-14 w-60 rounded-xl border p-2 shadow-2xl z-40 animate-in fade-in transition-colors ${
                       isLight
-                        ? 'bg-white border-slate-200 text-slate-900 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.15)]'
-                        : 'bg-[#12131a] border-neutral-700 text-white shadow-[0_10px_35px_-5px_rgba(0,0,0,0.6)]'
+                        ? 'bg-white border-amber-200 text-stone-900 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.15)]'
+                        : 'bg-[#180e0a] border-orange-500/30 text-white shadow-[0_10px_35px_-5px_rgba(255,107,0,0.2)]'
                     }`}
                   >
-                    <div className="font-mono-code text-[10px] uppercase opacity-60 px-2 py-1 border-b border-slate-200 dark:border-neutral-800">
+                    <div className="font-mono-code text-[10px] uppercase opacity-60 px-2 py-1 border-b border-orange-500/20 text-orange-300">
                       Attach & Send
                     </div>
 
@@ -777,10 +773,10 @@ export const FriendsMessenger: React.FC = () => {
                           setShowFileModal(true);
                         }}
                         className={`flex w-full items-center gap-2.5 px-3 py-2 text-xs rounded-lg text-left transition-colors ${
-                          isLight ? 'hover:bg-slate-100' : 'hover:bg-neutral-800'
+                          isLight ? 'hover:bg-amber-100' : 'hover:bg-[#24130c]'
                         }`}
                       >
-                        <FileImage className="h-4 w-4 text-blue-600 shrink-0" />
+                        <FileImage className="h-4 w-4 text-[#ff6b00] shrink-0" />
                         <div>
                           <p className="font-semibold">Select a File</p>
                           <p className="text-[10px] opacity-60">Pick photo or upload from disk</p>
@@ -794,10 +790,10 @@ export const FriendsMessenger: React.FC = () => {
                           setShowFolderModal(true);
                         }}
                         className={`flex w-full items-center gap-2.5 px-3 py-2 text-xs rounded-lg text-left transition-colors ${
-                          isLight ? 'hover:bg-slate-100' : 'hover:bg-neutral-800'
+                          isLight ? 'hover:bg-amber-100' : 'hover:bg-[#24130c]'
                         }`}
                       >
-                        <Folder className="h-4 w-4 text-cyan-600 shrink-0" />
+                        <Folder className="h-4 w-4 text-amber-500 shrink-0" />
                         <div>
                           <p className="font-semibold">Select a Folder</p>
                           <p className="text-[10px] opacity-60">Send full album or directory</p>
@@ -814,10 +810,11 @@ export const FriendsMessenger: React.FC = () => {
                     value={messageText}
                     onChange={e => setMessageText(e.target.value)}
                     aria-label={`Message @${activeChatFriend}`}
-                    className={`flex-1 rounded-full border py-2 px-4 font-sans text-xs focus:border-blue-600 focus:outline-none transition-colors ${
+                    placeholder="Write a message..."
+                    className={`flex-1 rounded-lg border py-2 px-4 font-sans text-xs focus:border-[#ff6b00] focus:outline-none transition-colors ${
                       isLight
-                        ? 'bg-white border-slate-300 text-slate-900'
-                        : 'bg-black border-neutral-700 text-white'
+                        ? 'bg-white border-amber-300 text-stone-900'
+                        : 'bg-[#100805] border-orange-500/30 text-white placeholder:text-neutral-500'
                     }`}
                   />
 
@@ -826,12 +823,12 @@ export const FriendsMessenger: React.FC = () => {
                     type="button"
                     onClick={() => setShowAttachMenu(!showAttachMenu)}
                     title="Attach file or folder"
-                    className={`flex h-9 w-9 items-center justify-center rounded-full border transition-all ${
+                    className={`flex h-9 w-9 items-center justify-center rounded-lg border transition-all ${
                       showAttachMenu
-                        ? 'border-blue-600 bg-blue-600 text-white rotate-45 shadow-sm'
+                        ? 'border-[#ff6b00] bg-[#ff6b00] text-black rotate-45 shadow-sm'
                         : isLight
-                        ? 'border-slate-300 bg-white text-slate-700 hover:border-blue-600 hover:text-blue-600'
-                        : 'border-neutral-700 bg-neutral-900 text-neutral-300 hover:border-white hover:text-white'
+                        ? 'border-amber-300 bg-white text-stone-700 hover:border-[#ff6b00] hover:text-[#ff6b00]'
+                        : 'border-orange-500/30 bg-[#1e110c] text-orange-200 hover:border-orange-400'
                     }`}
                   >
                     <Plus className="h-5 w-5" />
@@ -840,9 +837,9 @@ export const FriendsMessenger: React.FC = () => {
                   <button
                     type="submit"
                     disabled={!messageText.trim()}
-                    className="flex h-9 items-center gap-1.5 rounded-full bg-blue-600 px-4 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shadow-sm disabled:opacity-40"
+                    className="flex h-9 items-center gap-1.5 rounded-lg bg-[#ff6b00] px-4 text-xs font-bold text-black hover:bg-[#ff7d1f] transition-colors shadow-sm disabled:opacity-40"
                   >
-                    <Send className="h-3 w-3" />
+                    <Send className="h-3 w-3 stroke-[2.5]" />
                     <span className="hidden sm:inline">Send</span>
                   </button>
                 </form>
@@ -850,7 +847,7 @@ export const FriendsMessenger: React.FC = () => {
             </>
           ) : (
             <div className="flex h-full flex-col items-center justify-center p-8 text-center opacity-60 font-mono-code text-xs">
-              <Users className="h-10 w-10 mb-2 opacity-50" />
+              <Users className="h-10 w-10 mb-2 opacity-50 text-orange-400" />
               <p>Select a friend from the list to start messaging.</p>
             </div>
           )}
@@ -863,21 +860,21 @@ export const FriendsMessenger: React.FC = () => {
           <div
             className={`relative w-full max-w-md rounded-2xl border p-6 shadow-2xl transition-colors ${
               isLight
-                ? 'bg-white border-slate-200 text-slate-900'
-                : 'bg-[#12131a] border-neutral-800 text-white'
+                ? 'bg-white border-amber-200 text-stone-900'
+                : 'bg-[#140b07] border-orange-500/30 text-white'
             }`}
           >
             <button
               onClick={() => setShowFileModal(false)}
-              className={`absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full border transition-colors ${
-                isLight ? 'border-slate-200 text-slate-500 hover:bg-slate-100' : 'border-neutral-800 text-neutral-400 hover:bg-neutral-800'
+              className={`absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-lg border transition-colors ${
+                isLight ? 'border-amber-200 text-stone-500 hover:bg-amber-100' : 'border-orange-500/30 text-orange-200 hover:bg-[#24130c]'
               }`}
             >
               <X className="h-4 w-4" />
             </button>
 
             <div className="mb-4">
-              <span className="font-mono-code text-[10px] uppercase font-bold text-blue-600">Attach Asset</span>
+              <span className="font-mono-code text-[10px] uppercase font-bold text-[#ff6b00]">Attach Asset</span>
               <h3 className="font-sans text-lg font-bold">Select a File to Send</h3>
             </div>
 
@@ -886,11 +883,11 @@ export const FriendsMessenger: React.FC = () => {
               <label
                 className={`flex items-center justify-center gap-2 border-2 border-dashed rounded-xl py-3 px-4 text-xs font-mono-code cursor-pointer transition-colors ${
                   isLight
-                    ? 'border-slate-300 bg-slate-50 text-slate-700 hover:border-blue-500'
-                    : 'border-neutral-700 bg-neutral-900/50 text-neutral-300 hover:border-blue-400'
+                    ? 'border-amber-300 bg-amber-50 text-stone-700 hover:border-orange-500'
+                    : 'border-orange-500/30 bg-[#1b0f0a] text-orange-200 hover:border-[#ff6b00]'
                 }`}
               >
-                <Upload className="h-4 w-4 text-blue-600" />
+                <Upload className="h-4 w-4 text-[#ff6b00]" />
                 <span>Upload file from computer</span>
                 <input
                   type="file"
@@ -920,8 +917,8 @@ export const FriendsMessenger: React.FC = () => {
                   }
                   className={`flex items-center justify-between p-2 rounded-lg border cursor-pointer transition-colors ${
                     isLight
-                      ? 'border-slate-200 bg-slate-50 hover:border-blue-500'
-                      : 'border-neutral-800 bg-neutral-900/60 hover:border-blue-500'
+                      ? 'border-amber-200 bg-amber-50 hover:border-orange-500'
+                      : 'border-orange-500/20 bg-[#1b0f0a] hover:border-[#ff6b00]'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -931,7 +928,7 @@ export const FriendsMessenger: React.FC = () => {
                       <p className="font-mono-code text-[10px] opacity-70">{p.fileSize || '14 MB'}</p>
                     </div>
                   </div>
-                  <span className="rounded-full bg-blue-600 px-3 py-0.5 text-[10px] font-mono-code text-white">
+                  <span className="rounded-lg bg-[#ff6b00] px-3 py-0.5 text-[10px] font-mono-code font-bold text-black">
                     Attach →
                   </span>
                 </div>

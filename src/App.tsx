@@ -61,7 +61,7 @@ const AppContent: React.FC = () => {
     return (
       <div
         className={`min-h-screen transition-colors duration-200 ${
-          isLight ? 'bg-[#fbfbfd] text-slate-900' : 'bg-[#0a0a0f] text-white'
+          isLight ? 'bg-[#fcf8f5] text-stone-900' : 'bg-[#090503] text-white'
         }`}
       >
         <Navbar />
@@ -89,8 +89,8 @@ const AppContent: React.FC = () => {
     <div
       className={`min-h-screen transition-colors duration-200 flex flex-col justify-between ${
         isLight
-          ? 'bg-[#fbfbfd] text-slate-900 selection:bg-blue-600 selection:text-white'
-          : 'bg-[#0a0a0f] text-white selection:bg-blue-500 selection:text-white'
+          ? 'bg-[#fcf8f5] text-stone-900 selection:bg-[#ff6b00] selection:text-black'
+          : 'bg-[#090503] text-white selection:bg-[#ff6b00] selection:text-black'
       }`}
     >
       <div>
@@ -99,7 +99,7 @@ const AppContent: React.FC = () => {
         {/* Start Page (Explore / Home view) */}
         {activeTab === 'explore' && !searchQuery.trim() && (
           <div>
-            {/* 1. Wix-inspired Hero with user's headline and interactive floating card */}
+            {/* 1. Halloween Hero with Full Harvest Moon, bare tree horizon, and macOS window dropzone */}
             <HeroTransferSection />
 
             {/* 2. Published Community Files Section (Anyone can download!) */}
@@ -108,25 +108,25 @@ const AppContent: React.FC = () => {
             </section>
 
             {/* 3. Scroll-Down Option: Add Friends & Peer Chat Messenger with '+' file/folder selector */}
-            <div className="border-t border-slate-200 dark:border-neutral-800">
+            <div className="border-t border-orange-500/15">
               <FriendsMessenger />
             </div>
 
             {/* 4. Photography Portfolios & Grid Layout Section */}
-            <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 border-t border-slate-200 dark:border-neutral-800">
+            <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 border-t border-orange-500/15">
               <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-blue-600" />
-                    <span className="text-[11px] font-mono-code uppercase tracking-wider text-blue-600 font-bold">
-                      CURATED PORTFOLIOS
+                    <span className="h-2 w-2 rounded-full bg-[#ff6b00] shadow-sm shadow-orange-500/50" />
+                    <span className="text-[11px] font-mono-code uppercase tracking-wider text-[#ff6b00] font-bold">
+                      NOCTURNAL CURATION
                     </span>
                   </div>
                   <h2 className="mt-1 font-sans text-2xl font-bold tracking-tight">
                     Photography Portfolio Archive
                   </h2>
-                  <p className={`mt-1 text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                    Grid-based layouts highlighting architectural monoliths, high-contrast portraiture, and street nocturnal frames.
+                  <p className={`mt-1 text-xs ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
+                    High-contrast monochrome frames, brutalist monoliths, and eerie nocturnal street shadows.
                   </p>
                 </div>
               </div>
@@ -140,16 +140,16 @@ const AppContent: React.FC = () => {
         {searchQuery.trim() && (
           <div
             className={`border-b px-4 py-3 sm:px-6 ${
-              isLight ? 'bg-slate-100 border-slate-200' : 'bg-neutral-900/60 border-neutral-800'
+              isLight ? 'bg-amber-50/60 border-amber-200' : 'bg-[#120a07] border-orange-500/20'
             }`}
           >
             <div className="mx-auto flex max-w-7xl items-center justify-between font-mono-code text-xs">
               <span>
-                Search results for "<strong className="text-blue-600">{searchQuery}</strong>" ({displayedPhotos.length} works found)
+                Vault results for "<strong className="text-[#ff6b00]">{searchQuery}</strong>" ({displayedPhotos.length} works found)
               </span>
               <button
                 onClick={() => setSearchQuery('')}
-                className="text-blue-600 hover:underline"
+                className="text-[#ff6b00] hover:underline"
               >
                 Clear Search
               </button>
@@ -174,35 +174,35 @@ const AppContent: React.FC = () => {
         </main>
       </div>
 
-      {/* Modern Minimalist Footer with light/dark adaptive palette */}
+      {/* Modern Halloween Footer with dusk amber adaptive palette */}
       <footer
         className={`border-t py-12 px-4 sm:px-6 mt-16 transition-colors ${
           isLight
-            ? 'bg-slate-50 border-slate-200 text-slate-600'
-            : 'bg-[#08080c] border-neutral-800 text-neutral-400'
+            ? 'bg-[#f6eee8] border-amber-200/80 text-stone-600'
+            : 'bg-[#070302] border-orange-500/20 text-neutral-400'
         }`}
       >
         <div className="mx-auto max-w-7xl flex flex-col gap-6 md:flex-row md:items-center md:justify-between font-mono-code text-xs">
           <div>
             <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
-              <span className={`font-sans text-sm font-bold tracking-wider ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                NOIR ARCHIVE
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b00] shadow-sm shadow-orange-500/50" />
+              <span className={`font-sans text-sm font-bold tracking-wider ${isLight ? 'text-stone-900' : 'text-white'}`}>
+                NOIR ARCHIVE // HALLOWEEN EDITION
               </span>
             </div>
             <p className="mt-1 text-[11px] opacity-75">
-              Minimalist Photography Portfolios & Open Public File Transfers.
+              The photography vault that refuses to die. High-contrast portfolios & open transfers.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 text-[11px]">
-            <span className="text-blue-600 font-semibold">"Send anything. To anyone."</span>
+            <span className="text-[#ff6b00] font-semibold">"Cut off one link and two more grow back."</span>
             <span>•</span>
             <span>Public Downloads</span>
             <span>•</span>
             <span>Peer Messenger</span>
             <span>•</span>
-            <span>1-of-1 Username Security</span>
+            <span>1-of-1 Handles</span>
           </div>
 
           <div className="text-[11px] opacity-60">

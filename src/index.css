@@ -1,10 +1,12 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
     --font-serif: 'Cinzel', Georgia, serif;
     --font-mono: 'Space Mono', monospace;
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-spooky: 'Creepster', cursive, sans-serif;
   }
 
   body {
@@ -13,23 +15,23 @@
   }
 }
 
-/* Custom black & white scrollbar */
+/* Custom Halloween ember scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #0d0705;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #262626;
-  border-radius: 0px;
+  background: #381a0e;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #525252;
+  background: #ff6b00;
 }
 
 .font-editorial {
@@ -40,8 +42,27 @@
   font-family: var(--font-mono);
 }
 
-/* Subtle film grain texture effect */
+.font-spooky {
+  font-family: 'Creepster', cursive, sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* Eerie Halloween glowing text */
+.text-spooky-glow {
+  text-shadow: 0 0 20px rgba(255, 107, 0, 0.7), 0 0 45px rgba(255, 107, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.moon-glow {
+  box-shadow: 0 0 50px rgba(247, 214, 136, 0.45), 0 0 120px rgba(255, 107, 0, 0.25), inset -15px -15px 30px rgba(180, 110, 30, 0.4);
+}
+
+/* Subtle atmospheric dust & ember particles */
+.bg-halloween-mesh {
+  background: radial-gradient(circle at 50% 15%, rgba(255, 107, 0, 0.16) 0%, rgba(138, 43, 6, 0.08) 35%, transparent 70%);
+}
+
 .bg-grain {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-image: radial-gradient(rgba(255, 140, 0, 0.06) 1px, transparent 0);
   background-size: 24px 24px;
 }
+
