@@ -241,11 +241,11 @@ export const PublishModal: React.FC = () => {
                     required
                     value={title}
                     onChange={e => setTitle(e.target.value)}
-                    placeholder="e.g. Modern Architecture Master Scan"
+                    aria-label="Bundle Title"
                     className={`w-full rounded-lg border py-2 px-3 text-xs focus:border-blue-600 focus:outline-none transition-colors ${
                       isLight
-                        ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                        : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500'
+                        ? 'bg-slate-50 border-slate-300 text-slate-900'
+                        : 'bg-neutral-900 border-neutral-700 text-white'
                     }`}
                   />
                 </div>
@@ -282,11 +282,11 @@ export const PublishModal: React.FC = () => {
                   rows={2}
                   value={description}
                   onChange={e => setDescription(e.target.value)}
-                  placeholder="Share details about the camera, lens, format, or licensing (e.g. CC0 / Free for editorial study)..."
+                  aria-label="Description / Story"
                   className={`w-full rounded-lg border py-2 px-3 text-xs focus:border-blue-600 focus:outline-none transition-colors ${
                     isLight
-                      ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                      : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500'
+                      ? 'bg-slate-50 border-slate-300 text-slate-900'
+                      : 'bg-neutral-900 border-neutral-700 text-white'
                   }`}
                 />
               </div>
@@ -475,7 +475,7 @@ export const PublishModal: React.FC = () => {
                     type="text"
                     value={tagsInput}
                     onChange={e => setTagsInput(e.target.value)}
-                    placeholder="architecture, brutalism, wallpaper, high-res"
+                    aria-label="Tags (comma separated)"
                     className={`w-full rounded-lg border py-2 pl-9 pr-3 text-xs focus:border-blue-600 focus:outline-none transition-colors ${
                       isLight
                         ? 'bg-slate-50 border-slate-300 text-slate-900'

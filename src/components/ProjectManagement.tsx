@@ -460,8 +460,8 @@ export const ProjectManagement: React.FC = () => {
                   required
                   value={newTitle}
                   onChange={e => setNewTitle(e.target.value)}
-                  placeholder="e.g. Shadows over Concrete - Milano"
-                  className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                  aria-label="Project Title"
+                  className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                 />
               </div>
 
@@ -473,8 +473,8 @@ export const ProjectManagement: React.FC = () => {
                   rows={2}
                   value={newDesc}
                   onChange={e => setNewDesc(e.target.value)}
-                  placeholder="e.g. An inquiry into geometric tension and high-contrast sunlight."
-                  className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                  aria-label="Curatorial Description"
+                  className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                 />
               </div>
 
@@ -523,8 +523,8 @@ export const ProjectManagement: React.FC = () => {
                     type="text"
                     value={newClientName}
                     onChange={e => setNewClientName(e.target.value)}
-                    placeholder="e.g. Architectural Digest"
-                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                    aria-label="Client / Commission"
+                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
 
@@ -536,8 +536,8 @@ export const ProjectManagement: React.FC = () => {
                     type="text"
                     value={newDeliveryNotes}
                     onChange={e => setNewDeliveryNotes(e.target.value)}
-                    placeholder="e.g. Master proofs"
-                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                    aria-label="Delivery Note"
+                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -649,7 +649,7 @@ export const ProjectManagement: React.FC = () => {
                     type="url"
                     value={photoUrl}
                     onChange={e => setPhotoUrl(e.target.value)}
-                    placeholder="https://..."
+                    aria-label="Image URL or Base64"
                     className="w-full rounded-none border border-neutral-800 bg-neutral-900 py-2.5 px-3 font-mono-code text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
@@ -676,8 +676,8 @@ export const ProjectManagement: React.FC = () => {
                     required
                     value={photoTitle}
                     onChange={e => setPhotoTitle(e.target.value)}
-                    placeholder="e.g. Study in Negative Mass"
-                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                    aria-label="Photo Title"
+                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
 
@@ -706,8 +706,8 @@ export const ProjectManagement: React.FC = () => {
                   type="text"
                   value={photoCaption}
                   onChange={e => setPhotoCaption(e.target.value)}
-                  placeholder="e.g. Deep yellow filter, printed on Ilford Galerie fiber base."
-                  className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                  aria-label="Caption and Darkroom Notes"
+                  className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                 />
               </div>
 

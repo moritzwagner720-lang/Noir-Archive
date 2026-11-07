@@ -192,11 +192,11 @@ export const PublishedFilesSection: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search published files..."
+              aria-label="Search published files"
               className={`w-52 sm:w-64 rounded-full border py-1.5 pl-8 pr-3 text-xs focus:border-blue-600 focus:outline-none transition-colors ${
                 isLight
-                  ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'
-                  : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500'
+                  ? 'bg-white border-slate-300 text-slate-900'
+                  : 'bg-neutral-900 border-neutral-700 text-white'
               }`}
             />
           </div>
@@ -218,7 +218,34 @@ export const PublishedFilesSection: React.FC = () => {
       </div>
 
       {/* Grid of Published Packages */}
-      {displayed.length === 0 ? (
+      {publishedPackages.length === 0 ? (
+        <div
+          className={`py-20 px-6 text-center border-2 border-dashed rounded-2xl ${
+            isLight ? 'border-slate-300 bg-slate-50/80' : 'border-neutral-800 bg-neutral-900/40'
+          }`}
+        >
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500/10 text-blue-600 border border-blue-500/30">
+            <Upload className="h-6 w-6" />
+          </div>
+          <h3 className="text-lg font-bold font-sans">No Published Collections Yet</h3>
+          <p className={`mt-2 text-xs max-w-md mx-auto ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+            All placeholder items have been removed. Publish your photographs, archives, or curated series to share them with the open community for direct download.
+          </p>
+          <button
+            onClick={() => {
+              if (!currentUser) {
+                setAuthModal('signin');
+              } else {
+                setIsPublishModalOpen(true);
+              }
+            }}
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2.5 font-sans text-xs font-semibold text-white shadow-md shadow-blue-600/30 hover:bg-blue-500 transition-all hover:scale-105"
+          >
+            <Upload className="h-4 w-4" />
+            <span>Publish Your First File Collection</span>
+          </button>
+        </div>
+      ) : displayed.length === 0 ? (
         <div
           className={`py-16 text-center border-2 border-dashed rounded-2xl ${
             isLight ? 'border-slate-200 bg-slate-50' : 'border-neutral-800 bg-neutral-900/30'
@@ -227,7 +254,7 @@ export const PublishedFilesSection: React.FC = () => {
           <Layers className="mx-auto mb-3 h-10 w-10 text-slate-400" />
           <h3 className="text-base font-bold font-sans">No matching published packages</h3>
           <p className={`mt-1 text-xs font-mono-code ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
-            Try clearing filters or be the first to publish a bundle for this category.
+            Try clearing filters or search queries.
           </p>
           <button
             onClick={() => {

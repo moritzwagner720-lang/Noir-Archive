@@ -101,22 +101,16 @@ export const HeroTransferSection: React.FC = () => {
       return;
     }
 
-    // Default sample if empty to allow instant testing
-    const sample = photos[0];
-    const filesToSend: TransferFile[] = stagedFiles.length > 0
-      ? stagedFiles
-      : sample
-      ? [
-          {
-            id: sample.id,
-            name: `${sample.title.toLowerCase().replace(/\s+/g, '_')}.jpg`,
-            url: sample.url,
-            size: sample.fileSize || '14.2 MB',
-            type: 'image/jpeg',
-            folderPath: 'Curated_Batch',
-          },
-        ]
-      : [];
+    if (stagedFiles.length === 0) {
+      if (destinationChoice === 'publish') {
+        setIsPublishModalOpen(true);
+        return;
+      }
+      setIsTransferModalOpen(true);
+      return;
+    }
+
+    const filesToSend: TransferFile[] = stagedFiles;
 
     if (destinationChoice === 'publish') {
       // Publish to public community

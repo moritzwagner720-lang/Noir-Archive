@@ -205,8 +205,8 @@ export const TransferPortalView: React.FC<{ transferId: string }> = ({ transferI
               required
               value={passwordInput}
               onChange={e => setPasswordInput(e.target.value)}
-              placeholder="Enter transfer password..."
-              className="w-full rounded-none border border-neutral-800 bg-neutral-900 py-2.5 px-3 font-mono-code text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+              aria-label="Transfer password"
+              className="w-full rounded-none border border-neutral-800 bg-neutral-900 py-2.5 px-3 font-mono-code text-xs text-white focus:border-white focus:outline-none"
             />
             <button
               type="submit"
@@ -404,7 +404,7 @@ export const TransferPortalView: React.FC<{ transferId: string }> = ({ transferI
                     type="text"
                     value={clientAuthor}
                     onChange={e => setClientAuthor(e.target.value)}
-                    placeholder="e.g. Vogue Creative Director"
+                    aria-label="Your Name or Publication"
                     className="w-full rounded-none border border-neutral-800 bg-neutral-900 py-1.5 px-3 font-mono-code text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
@@ -418,7 +418,7 @@ export const TransferPortalView: React.FC<{ transferId: string }> = ({ transferI
                     required
                     value={clientComment}
                     onChange={e => setClientComment(e.target.value)}
-                    placeholder="e.g. Frame #02 approved for front cover. Master tonal scale looks flawless."
+                    aria-label="Selection Notes or Approval"
                     className="w-full rounded-none border border-neutral-800 bg-neutral-900 py-1.5 px-3 font-mono-code text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>

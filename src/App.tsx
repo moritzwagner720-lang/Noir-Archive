@@ -18,6 +18,7 @@ import { LightboxModal } from './components/LightboxModal';
 import { AuthModal } from './components/AuthModal';
 import { SendTransferModal } from './components/SendTransferModal';
 import { TransferPortalView } from './components/TransferPortalView';
+import { AuthGate } from './components/AuthGate';
 import {
   Camera,
   Send,
@@ -49,6 +50,11 @@ const AppContent: React.FC = () => {
   } = useApp();
 
   const isLight = theme === 'light';
+
+  // Strict Login Gate: The user must log in before they can do anything in the app
+  if (!currentUser) {
+    return <AuthGate />;
+  }
 
   // If a direct transfer link is accessed (e.g. ?transfer=TR-4912)
   if (activeTransferPortalId) {

@@ -254,8 +254,8 @@ export const SendTransferModal: React.FC = () => {
                     required
                     value={transferTitle}
                     onChange={e => setTransferTitle(e.target.value)}
-                    placeholder="e.g. Architectural Master Series 8K"
-                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900/80 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                    aria-label="Transfer Package Title"
+                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900/80 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
 
@@ -267,8 +267,8 @@ export const SendTransferModal: React.FC = () => {
                     type="text"
                     value={transferNote}
                     onChange={e => setTransferNote(e.target.value)}
-                    placeholder="e.g. Please approve 2 images for the magazine proof."
-                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900/80 py-2 px-3 text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                    aria-label="Delivery Note"
+                    className="mt-1 w-full rounded-none border border-neutral-800 bg-neutral-900/80 py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -481,7 +481,7 @@ export const SendTransferModal: React.FC = () => {
                           type="text"
                           value={recipientUsername}
                           onChange={e => setRecipientUsername(e.target.value.toLowerCase())}
-                          placeholder="e.g. elena_k"
+                          aria-label="Recipient username"
                           className="w-full rounded-none border border-neutral-800 bg-neutral-950 py-1.5 pl-6 pr-3 font-mono-code text-xs text-white focus:border-white focus:outline-none"
                         />
                       </div>
@@ -510,7 +510,7 @@ export const SendTransferModal: React.FC = () => {
                       type="email"
                       value={recipientEmail}
                       onChange={e => setRecipientEmail(e.target.value)}
-                      placeholder="client@studio.com"
+                      aria-label="Client Email Address"
                       className="w-full rounded-none border border-neutral-800 bg-neutral-950 py-1.5 px-3 font-mono-code text-xs text-white focus:border-white focus:outline-none"
                     />
                   </div>
@@ -543,8 +543,8 @@ export const SendTransferModal: React.FC = () => {
                       type="text"
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      placeholder="Enter client password..."
-                      className="mt-2 w-full rounded-none border border-neutral-800 bg-neutral-950 py-1.5 px-3 font-mono-code text-xs text-white placeholder-neutral-600 focus:border-white focus:outline-none"
+                      aria-label="Client transfer password"
+                      className="mt-2 w-full rounded-none border border-neutral-800 bg-neutral-950 py-1.5 px-3 font-mono-code text-xs text-white focus:border-white focus:outline-none"
                     />
                   )}
                 </div>

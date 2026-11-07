@@ -96,11 +96,6 @@ export const AuthModal: React.FC = () => {
     }
   };
 
-  const handleQuickFill = (u: string, p: string) => {
-    setMode('signin');
-    setUsername(u);
-    setPassword(p);
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in">
@@ -207,11 +202,11 @@ export const AuthModal: React.FC = () => {
                 required
                 value={username}
                 onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
-                placeholder="e.g. ansel_monochrom"
+                aria-label="Username handle"
                 className={`w-full rounded-xl border py-2 pl-7 pr-3 font-mono-code text-xs focus:outline-none transition-colors ${
                   isLight
-                    ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-blue-600'
-                    : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500 focus:border-blue-500'
+                    ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
+                    : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
                 } ${
                   mode === 'signup' && usernameStatus
                     ? usernameStatus.isValid
@@ -256,11 +251,11 @@ export const AuthModal: React.FC = () => {
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="••••••••••••"
+                aria-label="Account password"
                 className={`w-full rounded-xl border py-2 pl-3 pr-10 font-mono-code text-xs focus:outline-none transition-colors ${
                   isLight
-                    ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-blue-600'
-                    : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500 focus:border-blue-500'
+                    ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
+                    : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
                 }`}
               />
               <button
@@ -311,11 +306,11 @@ export const AuthModal: React.FC = () => {
                     type="text"
                     value={location}
                     onChange={e => setLocation(e.target.value)}
-                    placeholder="e.g. Zurich, Tokyo, New York"
+                    aria-label="Studio Location"
                     className={`w-full rounded-xl border py-1.5 pl-8 pr-3 font-mono-code text-xs focus:outline-none transition-colors ${
                       isLight
-                        ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-blue-600'
-                        : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500 focus:border-blue-500'
+                        ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
+                        : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
                     }`}
                   />
                 </div>
@@ -329,11 +324,11 @@ export const AuthModal: React.FC = () => {
                   rows={2}
                   value={bio}
                   onChange={e => setBio(e.target.value)}
-                  placeholder="e.g. Street photography, architectural geometry, archival darkroom."
+                  aria-label="Artist bio and focus"
                   className={`w-full rounded-xl border py-1.5 px-3 text-xs focus:outline-none transition-colors ${
                     isLight
-                      ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-blue-600'
-                      : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500 focus:border-blue-500'
+                      ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-blue-600'
+                      : 'bg-neutral-900 border-neutral-700 text-white focus:border-blue-500'
                   }`}
                 />
               </div>
@@ -350,34 +345,15 @@ export const AuthModal: React.FC = () => {
           </button>
         </form>
 
-        {/* Demo Test Credential Helpers */}
+        {/* Demo Test Credential Reference (Manual typing required) */}
         <div className="mt-6 border-t pt-4 border-slate-200 dark:border-neutral-800">
-          <p className="font-mono-code text-[10px] opacity-60 uppercase tracking-wider">
-            Quick demo login credentials:
+          <p className="font-mono-code text-[10px] opacity-60 uppercase tracking-wider mb-1">
+            Registered accounts (manual typing required):
           </p>
-          <div className="mt-2 flex flex-wrap gap-2 font-mono-code text-[10px]">
-            <button
-              type="button"
-              onClick={() => handleQuickFill('moritz', 'password123')}
-              className={`rounded-full border px-3 py-1 transition-colors ${
-                isLight
-                  ? 'border-slate-300 bg-slate-100 hover:border-blue-500 hover:text-blue-600'
-                  : 'border-neutral-800 bg-neutral-900 hover:border-blue-400 hover:text-white'
-              }`}
-            >
-              @moritz (password123)
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickFill('elena_k', 'secret456')}
-              className={`rounded-full border px-3 py-1 transition-colors ${
-                isLight
-                  ? 'border-slate-300 bg-slate-100 hover:border-blue-500 hover:text-blue-600'
-                  : 'border-neutral-800 bg-neutral-900 hover:border-blue-400 hover:text-white'
-              }`}
-            >
-              @elena_k (secret456)
-            </button>
+          <div className="font-mono-code text-[11px] space-y-0.5 opacity-80">
+            <div>@moritz • password: password123</div>
+            <div>@elena_k • password: secret456</div>
+            <div>@kenji_mono • password: mono789</div>
           </div>
         </div>
       </div>

@@ -139,7 +139,16 @@ export const ProjectsView: React.FC = () => {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {displayedProjects.length === 0 ? (
+        <div className="flex min-h-[300px] flex-col items-center justify-center border-2 border-dashed border-neutral-800 rounded-2xl p-12 text-center bg-neutral-900/30">
+          <FolderOpen className="mb-3 h-8 w-8 text-neutral-500" />
+          <h3 className="font-sans text-lg font-semibold text-white">No Projects Found</h3>
+          <p className="mt-1 font-mono-code text-xs text-neutral-400">
+            Create a project or publish collections to start curating your photography portfolio.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {displayedProjects.map(project => {
           const author = users.find(u => u.id === project.userId);
           const count = photos.filter(p => p.projectId === project.id).length;
@@ -209,6 +218,7 @@ export const ProjectsView: React.FC = () => {
           );
         })}
       </div>
+      )}
     </div>
   );
 };

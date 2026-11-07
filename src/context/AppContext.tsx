@@ -117,15 +117,15 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const STORAGE_KEY_USERS = 'noir_archive_users_v3';
-const STORAGE_KEY_CURRENT_USER = 'noir_archive_current_user_v3';
-const STORAGE_KEY_PROJECTS = 'noir_archive_projects_v3';
-const STORAGE_KEY_PHOTOS = 'noir_archive_photos_v3';
-const STORAGE_KEY_TRANSFERS = 'noir_archive_transfers_v3';
-const STORAGE_KEY_THEME = 'noir_archive_theme_v3';
-const STORAGE_KEY_FRIEND_REQUESTS = 'noir_archive_friend_requests_v3';
-const STORAGE_KEY_CHAT_MESSAGES = 'noir_archive_chat_messages_v3';
-const STORAGE_KEY_PUBLISHED = 'noir_archive_published_v3';
+const STORAGE_KEY_USERS = 'noir_archive_users_v5';
+const STORAGE_KEY_CURRENT_USER = 'noir_archive_current_user_v5';
+const STORAGE_KEY_PROJECTS = 'noir_archive_projects_v5';
+const STORAGE_KEY_PHOTOS = 'noir_archive_photos_v5';
+const STORAGE_KEY_TRANSFERS = 'noir_archive_transfers_v5';
+const STORAGE_KEY_THEME = 'noir_archive_theme_v5';
+const STORAGE_KEY_FRIEND_REQUESTS = 'noir_archive_friend_requests_v5';
+const STORAGE_KEY_CHAT_MESSAGES = 'noir_archive_chat_messages_v5';
+const STORAGE_KEY_PUBLISHED = 'noir_archive_published_v5';
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [users, setUsers] = useState<User[]>(() => {
@@ -137,15 +137,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   });
 
-  const [currentUser, setCurrentUser] = useState<User | null>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY_CURRENT_USER);
-      if (stored) return JSON.parse(stored);
-      return INITIAL_USERS[0];
-    } catch {
-      return INITIAL_USERS[0];
-    }
-  });
+  // Strict requirement: User MUST actively log in. Never automatically logged in.
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const [projects, setProjects] = useState<Project[]>(() => {
     try {
@@ -267,15 +260,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   useEffect(() => {
     try {
-      if (currentUser) {
-        localStorage.setItem(STORAGE_KEY_CURRENT_USER, JSON.stringify(currentUser));
-      } else {
-        localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
-      }
+      // Clear any legacy auto-login sessions from localStorage
+      localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
     } catch (e) {
       console.warn('Storage error', e);
     }
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     try {
@@ -356,6 +346,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const signOut = () => {
     setCurrentUser(null);
+    try {
+      localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
+      sessionStorage.clear();
+    } catch {}
   };
 
   const switchUserQuick = (username: string) => {
@@ -425,7 +419,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setPhotos(prev => [newPhoto, ...prev]);
 
     const proj = projects.find(p => p.id === photoData.projectId);
-    if (proj && (!proj.coverPhotoUrl || proj.coverPhotoUrl.includes('placeholder'))) {
+    if (proj && !proj.coverPhotoUrl) {
       updateProject(proj.id, { coverPhotoUrl: newPhoto.url });
     }
 

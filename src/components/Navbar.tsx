@@ -221,11 +221,11 @@ export const Navbar: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search portfolios, files..."
+              aria-label="Search portfolios and files"
               className={`w-44 rounded-full border py-1.5 pl-8 pr-3 font-mono-code text-xs transition-all focus:w-60 focus:border-blue-600 focus:outline-none ${
                 isLight
-                  ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400'
-                  : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500'
+                  ? 'bg-slate-50 border-slate-300 text-slate-900'
+                  : 'bg-neutral-900 border-neutral-700 text-white'
               }`}
             />
           </div>
@@ -390,32 +390,6 @@ export const Navbar: React.FC = () => {
                       </span>
                       <ArrowRight className="h-3 w-3" />
                     </button>
-                  </div>
-
-                  {/* Switch Persona */}
-                  <div className="border-t pt-2 border-slate-200 dark:border-neutral-800">
-                    <p className="font-mono-code text-[9px] uppercase tracking-wider opacity-60">
-                      Switch Persona:
-                    </p>
-                    <div className="mt-1 flex flex-col gap-1">
-                      {users.map(u => (
-                        <button
-                          key={u.id}
-                          onClick={() => {
-                            switchUserQuick(u.username);
-                            setShowUserDropdown(false);
-                          }}
-                          className={`flex items-center justify-between px-2 py-1 rounded text-[11px] font-mono-code ${
-                            u.username === currentUser.username
-                              ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-600 font-semibold'
-                              : 'opacity-75 hover:opacity-100 hover:bg-slate-100 dark:hover:bg-neutral-800'
-                          }`}
-                        >
-                          <span>@{u.username}</span>
-                          <span className="text-[9px] opacity-60">{u.location || 'Member'}</span>
-                        </button>
-                      ))}
-                    </div>
                   </div>
 
                   <div className="mt-3 border-t pt-2 border-slate-200 dark:border-neutral-800">

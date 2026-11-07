@@ -280,11 +280,11 @@ export const FriendsMessenger: React.FC = () => {
               type="text"
               value={addFriendInput}
               onChange={e => setAddFriendInput(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
-              placeholder="friend_username"
+              aria-label="Add friend by username handle"
               className={`w-48 sm:w-56 rounded-full border py-2 pl-7 pr-3 font-mono-code text-xs focus:border-blue-600 focus:outline-none transition-colors ${
                 isLight
-                  ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'
-                  : 'bg-neutral-900 border-neutral-700 text-white placeholder-neutral-500'
+                  ? 'bg-white border-slate-300 text-slate-900'
+                  : 'bg-neutral-900 border-neutral-700 text-white'
               }`}
             />
           </div>
@@ -689,11 +689,11 @@ export const FriendsMessenger: React.FC = () => {
                     type="text"
                     value={messageText}
                     onChange={e => setMessageText(e.target.value)}
-                    placeholder={`Message @${activeChatFriend}...`}
+                    aria-label={`Message @${activeChatFriend}`}
                     className={`flex-1 rounded-full border py-2 px-4 font-sans text-xs focus:border-blue-600 focus:outline-none transition-colors ${
                       isLight
-                        ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'
-                        : 'bg-black border-neutral-700 text-white placeholder-neutral-500'
+                        ? 'bg-white border-slate-300 text-slate-900'
+                        : 'bg-black border-neutral-700 text-white'
                     }`}
                   />
 

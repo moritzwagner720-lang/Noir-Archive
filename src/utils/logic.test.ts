@@ -182,3 +182,24 @@ test('createPublishedPackage creates valid public bundle and validates input', a
   assert.equal(unliked.isLiked, false);
   assert.equal(unliked.updatedPackage.likesCount, 0);
 });
+
+test('user credentials and authentication gate logic', () => {
+  const users = [
+    { username: 'moritz', passwordHash: hashPassword('password123') },
+    { username: 'elena_k', passwordHash: hashPassword('secret456') },
+    { username: 'kenji_mono', passwordHash: hashPassword('mono789') },
+  ];
+
+  // Correct credentials authenticate
+  const moritz = users.find(u => u.username === 'moritz');
+  assert.ok(moritz);
+  assert.equal(verifyPassword('password123', moritz.passwordHash), true);
+
+  // Incorrect credentials fail
+  assert.equal(verifyPassword('wrongpass', moritz.passwordHash), false);
+
+  // Non-existent user cannot authenticate
+  const nonExistent = users.find(u => u.username === 'stranger');
+  assert.equal(nonExistent, undefined);
+});
+
