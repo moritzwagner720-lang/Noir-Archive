@@ -1,0 +1,6 @@
+{
+  "name": "NOIR ARCHIVE — Minimalist Photography Portfolios & File Delivery",
+  "description": "Clean, black & white minimalist photography portfolio platform with customizable grid layouts, unique username authentication, project curation, and secure client file and folder transfer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
