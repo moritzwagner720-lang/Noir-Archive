@@ -39,7 +39,7 @@ export function createPublishedPackage(input: CreatePublishedInput): PublishedPa
     authorUsername: input.authorUsername.trim() || 'creator',
     authorAvatar: input.authorAvatar,
     category: input.category || 'bundles',
-    tags: input.tags && input.tags.length > 0 ? input.tags : ['photography', 'raw', 'free-download'],
+    tags: input.tags && input.tags.length > 0 ? input.tags : ['archive', 'dataset', 'free-download'],
     coverUrl,
     files: input.files,
     totalSize,

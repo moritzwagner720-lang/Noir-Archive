@@ -28,7 +28,7 @@ export function createTransferPackage(input: CreateTransferInput): FileTransferP
     throw new Error('Transfer title is required');
   }
   if (!input.files || input.files.length === 0) {
-    throw new Error('At least one file or photo must be included in the transfer');
+    throw new Error('At least one file or folder must be included in the transfer');
   }
 
   const now = new Date();

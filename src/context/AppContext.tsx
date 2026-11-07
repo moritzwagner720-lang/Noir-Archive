@@ -429,7 +429,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const newUser: User = {
       id: `user-${Date.now()}`,
       username: data.username.trim().toLowerCase(),
-      bio: data.bio?.trim() || 'Visual photographer & darkroom artist.',
+      bio: data.bio?.trim() || 'Digital archivist & data creator.',
       avatar:
         data.avatar ||
         'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',

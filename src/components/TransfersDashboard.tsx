@@ -39,7 +39,7 @@ export const TransfersDashboard: React.FC = () => {
         <Send className="mx-auto mb-4 h-12 w-12 text-[#ff6b00]" />
         <h2 className={`font-editorial text-2xl font-bold ${isLight ? 'text-stone-900' : 'text-white'}`}>Transfers Hub</h2>
         <p className={`mt-2 text-xs ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
-          Sign in or join with a unique username to dispatch archival folders, manage client portals, and receive photography assets from collaborators.
+          Sign in or join with a unique username to dispatch archival folders, manage client portals, and receive data packages from collaborators.
         </p>
         <button
           onClick={() => setAuthModal('signin')}
@@ -289,7 +289,7 @@ export const TransfersDashboard: React.FC = () => {
               <Inbox className="mx-auto mb-3 h-8 w-8 text-orange-500" />
               <h3 className="font-editorial text-base font-bold">No Received Packages</h3>
               <p className={`mt-1 font-mono-code text-xs ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
-                When other photographers send files or folders to @{currentUser.username}, they will automatically appear here.
+                When other users send files or folders to @{currentUser.username}, they will automatically appear here.
               </p>
             </div>
           ) : (

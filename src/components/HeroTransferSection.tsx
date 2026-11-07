@@ -216,7 +216,7 @@ export const HeroTransferSection: React.FC = () => {
         >
           <span className="text-orange-500 font-bold text-xs animate-pulse">✶</span>
           <span className="font-mono-code text-xs tracking-wide font-medium">
-            v5.0 just rose from the darkroom grave!
+            v5.0 Midnight Engine is live!
           </span>
         </div>
 
@@ -236,8 +236,8 @@ export const HeroTransferSection: React.FC = () => {
         <p className={`mx-auto mt-5 max-w-2xl font-sans text-sm sm:text-base leading-relaxed font-normal ${
           isLight ? 'text-stone-700' : 'text-neutral-300'
         }`}>
-          Noir Archive is the nocturnal platform allowing you to transfer, curate, and download high-contrast
-          photography and lossless directory bundles. Cut off one transfer link and two more grow back.
+          Noir Archive is the nocturnal platform allowing you to transfer, curate, and download high-speed
+          data archives and lossless directory bundles. Zero compression, maximum fidelity.
         </p>
 
         {/* Hero CTA Buttons */}
@@ -512,10 +512,10 @@ export const HeroTransferSection: React.FC = () => {
                   </div>
 
                   <p className={`font-sans text-base font-bold ${isLight ? 'text-stone-900' : 'text-white'}`}>
-                    Drag & drop photographs, RAW files, or whole folders
+                    Drag & drop files, archives, or whole folders
                   </p>
                   <p className={`text-xs mt-1 font-mono-code ${isLight ? 'text-stone-600' : 'text-orange-200/70'}`}>
-                    Instant staging for full photography portfolios, ZIP packages, and client deliveries
+                    Instant staging for full datasets, ZIP packages, and client deliveries
                   </p>
 
                   {/* Staged files counter */}

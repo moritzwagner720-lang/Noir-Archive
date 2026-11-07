@@ -5,7 +5,7 @@ export const INITIAL_USERS: User[] = [
   {
     id: 'user-moritz',
     username: 'moritz',
-    bio: 'Architectural and minimalist street photography. Exploring geometric tension, concrete textures, and natural contrast.',
+    bio: 'Digital archivist and systems architect. Managing secure client portals, data pipelines, and zero-compression delivery.',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     location: 'Berlin',
     passwordHash: hashPassword('password123'),
@@ -15,7 +15,7 @@ export const INITIAL_USERS: User[] = [
   {
     id: 'user-elena',
     username: 'elena_k',
-    bio: 'Monochrome portraiture, sculptural fashion, and darkroom chiaroscuro.',
+    bio: 'Technical designer and media archivist specializing in client asset delivery.',
     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
     location: 'Paris',
     passwordHash: hashPassword('secret456'),
@@ -25,7 +25,7 @@ export const INITIAL_USERS: User[] = [
   {
     id: 'user-kenji',
     username: 'kenji_mono',
-    bio: 'Nocturnal street observer. Capturing midnight rain, subway shadows, and solitary moments across Tokyo.',
+    bio: 'Data systems engineer. Capturing system logs, uncompressed media, and distributed vaults.',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     location: 'Tokyo',
     passwordHash: hashPassword('mono789'),
@@ -35,7 +35,7 @@ export const INITIAL_USERS: User[] = [
   {
     id: 'user-daddy',
     username: 'daddy',
-    bio: 'Visual artist and photographer.',
+    bio: 'Archivist and creative director.',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80',
     location: 'Berlin',
     passwordHash: hashPassword('password123'),

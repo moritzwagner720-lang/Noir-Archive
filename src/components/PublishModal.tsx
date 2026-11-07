@@ -30,7 +30,7 @@ export const PublishModal: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState<PhotoCategory>('architecture');
-  const [tagsInput, setTagsInput] = useState('raw, photography, free-download');
+  const [tagsInput, setTagsInput] = useState('archive, dataset, free-download');
   const [sourceType, setSourceType] = useState<'upload' | 'folder-upload' | 'library'>('upload');
   const [stagedFiles, setStagedFiles] = useState<TransferFile[]>([]);
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[]>([]);
