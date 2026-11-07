@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import {
   UserPlus,
@@ -82,8 +82,37 @@ export const FriendsMessenger: React.FC = () => {
     );
   }
 
-  // Current user's friend handles
-  const friendsList = currentUser.friends || [];
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Derive all active chat partners (friends + anyone who has messaged current user or vice versa)
+  const messagePartners = Array.from(
+    new Set(
+      chatMessages
+        .filter(
+          m =>
+            m.senderUsername.toLowerCase() === currentUser.username.toLowerCase() ||
+            m.recipientUsername.toLowerCase() === currentUser.username.toLowerCase()
+        )
+        .map(m =>
+          m.senderUsername.toLowerCase() === currentUser.username.toLowerCase()
+            ? m.recipientUsername
+            : m.senderUsername
+        )
+    )
+  );
+
+  const friendsList = Array.from(
+    new Set([...(currentUser.friends || []), ...messagePartners])
+  );
+
+  // Auto-select first conversation partner if none selected or if current selection is invalid
+  useEffect(() => {
+    if (friendsList.length > 0) {
+      if (!activeChatFriend || !friendsList.some(f => f.toLowerCase() === activeChatFriend.toLowerCase())) {
+        setActiveChatFriend(friendsList[0]);
+      }
+    }
+  }, [friendsList, activeChatFriend, setActiveChatFriend]);
 
   // Pending incoming requests
   const pendingIncoming = friendRequests.filter(
@@ -127,6 +156,11 @@ export const FriendsMessenger: React.FC = () => {
         (m.senderUsername.toLowerCase() === activeChatFriend.toLowerCase() &&
           m.recipientUsername.toLowerCase() === currentUser.username.toLowerCase()))
   );
+
+  // Auto-scroll chat window when new messages arrive or when conversation changes
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [conversationMessages.length, activeChatFriend]);
 
   // Send regular text message
   const handleSendMessage = (e: React.FormEvent) => {
@@ -438,6 +472,27 @@ export const FriendsMessenger: React.FC = () => {
                   const friendUser = users.find(u => u.username.toLowerCase() === handle.toLowerCase());
                   const isSelected = activeChatFriend?.toLowerCase() === handle.toLowerCase();
 
+                  // Latest message between currentUser and handle
+                  const threadMessages = chatMessages.filter(
+                    m =>
+                      (m.senderUsername.toLowerCase() === currentUser.username.toLowerCase() &&
+                        m.recipientUsername.toLowerCase() === handle.toLowerCase()) ||
+                      (m.senderUsername.toLowerCase() === handle.toLowerCase() &&
+                        m.recipientUsername.toLowerCase() === currentUser.username.toLowerCase())
+                  );
+                  const lastMsg = threadMessages[threadMessages.length - 1];
+                  const hasUnread = lastMsg && lastMsg.senderUsername.toLowerCase() === handle.toLowerCase() && !isSelected;
+                  const timeStr = lastMsg
+                    ? new Date(lastMsg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    : '';
+                  const snippet = lastMsg
+                    ? lastMsg.attachment
+                      ? lastMsg.attachment.type === 'folder'
+                        ? `📁 ${lastMsg.attachment.title}`
+                        : `📷 ${lastMsg.attachment.title}`
+                      : lastMsg.text
+                    : (friendUser?.bio || 'Connected collaborator');
+
                   return (
                     <button
                       key={handle}
@@ -452,8 +507,8 @@ export const FriendsMessenger: React.FC = () => {
                           : 'hover:bg-neutral-900/40'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="relative">
+                      <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
+                        <div className="relative shrink-0">
                           <img
                             src={
                               friendUser?.avatar ||
@@ -464,19 +519,33 @@ export const FriendsMessenger: React.FC = () => {
                           />
                           <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-black" />
                         </div>
-                        <div>
-                          <p className="font-mono-code text-xs font-semibold">
-                            @{handle}
-                          </p>
-                          <p className="font-sans text-[11px] opacity-70 line-clamp-1">
-                            {friendUser?.bio || 'Connected collaborator'}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-1">
+                            <p className="font-mono-code text-xs font-semibold truncate">
+                              @{handle}
+                            </p>
+                            {timeStr && (
+                              <span className="font-mono-code text-[10px] opacity-50 shrink-0">
+                                {timeStr}
+                              </span>
+                            )}
+                          </div>
+                          <p className={`font-sans text-[11px] truncate ${
+                            hasUnread ? 'font-semibold text-blue-600 dark:text-blue-400' : 'opacity-70'
+                          }`}>
+                            {snippet}
                           </p>
                         </div>
                       </div>
 
-                      <span className="font-mono-code text-[11px] text-blue-600 font-medium">
-                        Chat →
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {hasUnread && (
+                          <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" title="New message" />
+                        )}
+                        <span className="font-mono-code text-[11px] text-blue-600 font-medium">
+                          Chat →
+                        </span>
+                      </div>
                     </button>
                   );
                 })}
@@ -680,6 +749,7 @@ export const FriendsMessenger: React.FC = () => {
                     );
                   })
                 )}
+                <div ref={messagesEndRef} />
               </div>
 
               {/* Bottom Typing Bar with '+' button on the right side */}

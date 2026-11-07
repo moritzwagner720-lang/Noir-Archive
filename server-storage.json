@@ -49,7 +49,15 @@
     }
   ],
   "friendRequests": [],
-  "chatMessages": [],
+  "chatMessages": [
+    {
+      "id": "msg-1794061673032-30",
+      "senderUsername": "moritz",
+      "recipientUsername": "daddy",
+      "text": "Hey daddy, real-time messaging is now working instantly!",
+      "createdAt": "2026-11-07T14:27:53.032Z"
+    }
+  ],
   "transfers": [],
   "publishedPackages": []
 }

@@ -353,15 +353,25 @@ async function startServer() {
 
   // Chat Messages - Send
   app.post('/api/chat-messages', (req, res) => {
-    const { senderUsername, recipientUsername, text, attachment } = req.body;
+    const { id, senderUsername, recipientUsername, text, attachment } = req.body;
     if (!senderUsername || !recipientUsername || (!text?.trim() && !attachment)) {
       return res.status(400).json({ error: 'Invalid message parameters' });
     }
 
+    const cleanSender = senderUsername.replace(/^@/, '').toLowerCase().trim();
+    const cleanRecipient = recipientUsername.replace(/^@/, '').toLowerCase().trim();
+
+    // Prevent duplicate insert if message with same id already exists
+    const msgId = id || `msg-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const existing = store.chatMessages.find(m => m.id === msgId);
+    if (existing) {
+      return res.json({ success: true, message: existing });
+    }
+
     const newMessage = {
-      id: `msg-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-      senderUsername: senderUsername.replace(/^@/, '').toLowerCase().trim(),
-      recipientUsername: recipientUsername.replace(/^@/, '').toLowerCase().trim(),
+      id: msgId,
+      senderUsername: cleanSender,
+      recipientUsername: cleanRecipient,
       text: text?.trim() || '',
       attachment,
       createdAt: new Date().toISOString(),

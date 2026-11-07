@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import {
   User,
   Project,
@@ -142,8 +142,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   });
 
-  // Strict requirement: User MUST actively log in. Never automatically logged in.
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  // Persistent user session: Remains logged in across refreshes until explicit sign-out
+  const [currentUser, setCurrentUser] = useState<User | null>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_CURRENT_USER);
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
 
   const [projects, setProjects] = useState<Project[]>(() => {
     try {
@@ -263,14 +270,23 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   }, [users]);
 
+  const currentUserRef = useRef<User | null>(currentUser);
+  useEffect(() => {
+    currentUserRef.current = currentUser;
+  }, [currentUser]);
+
+  // Persist current logged-in user session so refresh does not log them out
   useEffect(() => {
     try {
-      // Clear any legacy auto-login sessions from localStorage
-      localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
+      if (currentUser) {
+        localStorage.setItem(STORAGE_KEY_CURRENT_USER, JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
+      }
     } catch (e) {
       console.warn('Storage error', e);
     }
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     try {
@@ -309,6 +325,25 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
               });
               return Array.from(map.values());
             });
+
+            // Keep currentUser in sync with fresh friends list & profile from server
+            const me = currentUserRef.current;
+            if (me) {
+              const freshMe = serverUsers.find(u => u.username.toLowerCase() === me.username.toLowerCase());
+              if (freshMe) {
+                setCurrentUser(prev => {
+                  if (!prev) return null;
+                  const prevFriends = prev.friends || [];
+                  const newFriends = freshMe.friends || [];
+                  const isDiff =
+                    prevFriends.length !== newFriends.length ||
+                    prevFriends.some((f, idx) => f !== newFriends[idx]) ||
+                    prev.bio !== freshMe.bio ||
+                    prev.avatar !== freshMe.avatar;
+                  return isDiff ? { ...prev, ...freshMe, friends: newFriends } : prev;
+                });
+              }
+            }
           }
         }
 
@@ -317,24 +352,28 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         if (reqRes.ok) {
           const serverRequests = await reqRes.json();
           if (isMounted && Array.isArray(serverRequests)) {
-            setFriendRequests(prev => {
-              const map = new Map<string, FriendRequest>();
-              prev.forEach(r => map.set(r.id, r));
-              serverRequests.forEach(r => map.set(r.id, r));
-              return Array.from(map.values());
-            });
+            setFriendRequests(serverRequests);
           }
         }
 
-        // 3. Sync chat messages
+        // 3. Sync chat messages (instant sync so recipient sees messages without page refresh)
         const chatRes = await fetch('/api/chat-messages');
         if (chatRes.ok) {
-          const serverMessages = await chatRes.json();
+          const serverMessages: ChatMessage[] = await chatRes.json();
           if (isMounted && Array.isArray(serverMessages)) {
             setChatMessages(prev => {
               const map = new Map<string, ChatMessage>();
-              prev.forEach(m => map.set(m.id, m));
               serverMessages.forEach(m => map.set(m.id, m));
+              // Preserve any optimistic messages from the last 15 seconds that might still be saving
+              const now = Date.now();
+              prev.forEach(m => {
+                if (!map.has(m.id)) {
+                  const age = now - new Date(m.createdAt).getTime();
+                  if (age < 15000) {
+                    map.set(m.id, m);
+                  }
+                }
+              });
               return Array.from(map.values()).sort(
                 (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
               );
@@ -347,10 +386,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
 
     syncWithServer();
-    const interval = setInterval(syncWithServer, 2500);
+    // 1-second high-frequency polling for instant messaging responsiveness
+    const interval = setInterval(syncWithServer, 1000);
+    window.addEventListener('focus', syncWithServer);
     return () => {
       isMounted = false;
       clearInterval(interval);
+      window.removeEventListener('focus', syncWithServer);
     };
   }, []);
 
@@ -740,7 +782,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   ) => {
     if (!currentUser) return;
     const msg = createChatMessage(currentUser.username, recipientUsername, text, attachment);
-    setChatMessages(prev => [...prev, msg]);
+    setChatMessages(prev => [...prev.filter(m => m.id !== msg.id), msg]);
 
     // Send to server
     try {
@@ -748,6 +790,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          id: msg.id,
           senderUsername: currentUser.username,
           recipientUsername,
           text,
