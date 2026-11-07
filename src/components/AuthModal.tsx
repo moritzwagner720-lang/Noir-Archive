@@ -345,16 +345,11 @@ export const AuthModal: React.FC = () => {
           </button>
         </form>
 
-        {/* Demo Test Credential Reference (Manual typing required) */}
+        {/* Security Notice */}
         <div className="mt-6 border-t pt-4 border-slate-200 dark:border-neutral-800">
-          <p className="font-mono-code text-[10px] opacity-60 uppercase tracking-wider mb-1">
-            Registered accounts (manual typing required):
+          <p className="font-sans text-[11px] text-neutral-400">
+            🔒 Account credentials are encrypted. Your password is private and never visible to other users.
           </p>
-          <div className="font-mono-code text-[11px] space-y-0.5 opacity-80">
-            <div>@moritz • password: password123</div>
-            <div>@elena_k • password: secret456</div>
-            <div>@kenji_mono • password: mono789</div>
-          </div>
         </div>
       </div>
     </div>

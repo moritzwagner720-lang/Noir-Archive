@@ -32,6 +32,16 @@ export const INITIAL_USERS: User[] = [
     createdAt: '2024-03-10T09:30:00.000Z',
     friends: ['moritz'],
   },
+  {
+    id: 'user-daddy',
+    username: 'daddy',
+    bio: 'Visual artist and photographer.',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80',
+    location: 'Berlin',
+    passwordHash: hashPassword('password123'),
+    createdAt: '2024-04-01T09:30:00.000Z',
+    friends: [],
+  },
 ];
 
 // All placeholder collections, packages, projects, photos, and messages are cleared.

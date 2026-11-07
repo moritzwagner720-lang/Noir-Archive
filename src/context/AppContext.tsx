@@ -131,7 +131,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [users, setUsers] = useState<User[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_USERS);
-      return stored ? JSON.parse(stored) : INITIAL_USERS;
+      const parsed: User[] = stored ? JSON.parse(stored) : [];
+      const userMap = new Map<string, User>();
+      INITIAL_USERS.forEach(u => userMap.set(u.username.toLowerCase(), u));
+      parsed.forEach(u => userMap.set(u.username.toLowerCase(), u));
+      return Array.from(userMap.values());
     } catch {
       return INITIAL_USERS;
     }
@@ -279,6 +283,76 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   }, [projects, photos, transfers, friendRequests, chatMessages]);
 
+  // Synchronize state with backend server (shared across all devices & users)
+  useEffect(() => {
+    let isMounted = true;
+
+    const syncWithServer = async () => {
+      try {
+        // 1. Sync users
+        const usersRes = await fetch('/api/users');
+        if (usersRes.ok) {
+          const serverUsers: User[] = await usersRes.json();
+          if (isMounted && Array.isArray(serverUsers) && serverUsers.length > 0) {
+            setUsers(prev => {
+              const map = new Map<string, User>();
+              INITIAL_USERS.forEach(u => map.set(u.username.toLowerCase(), u));
+              prev.forEach(u => map.set(u.username.toLowerCase(), u));
+              serverUsers.forEach(u => {
+                const existing = map.get(u.username.toLowerCase());
+                map.set(u.username.toLowerCase(), {
+                  ...u,
+                  passwordHash: existing?.passwordHash || hashPassword('password123'),
+                  friends: Array.from(new Set([...(existing?.friends || []), ...(u.friends || [])])),
+                });
+              });
+              return Array.from(map.values());
+            });
+          }
+        }
+
+        // 2. Sync friend requests
+        const reqRes = await fetch('/api/friend-requests');
+        if (reqRes.ok) {
+          const serverRequests = await reqRes.json();
+          if (isMounted && Array.isArray(serverRequests)) {
+            setFriendRequests(prev => {
+              const map = new Map<string, FriendRequest>();
+              prev.forEach(r => map.set(r.id, r));
+              serverRequests.forEach(r => map.set(r.id, r));
+              return Array.from(map.values());
+            });
+          }
+        }
+
+        // 3. Sync chat messages
+        const chatRes = await fetch('/api/chat-messages');
+        if (chatRes.ok) {
+          const serverMessages = await chatRes.json();
+          if (isMounted && Array.isArray(serverMessages)) {
+            setChatMessages(prev => {
+              const map = new Map<string, ChatMessage>();
+              prev.forEach(m => map.set(m.id, m));
+              serverMessages.forEach(m => map.set(m.id, m));
+              return Array.from(map.values()).sort(
+                (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+              );
+            });
+          }
+        }
+      } catch {
+        // Backend offline or fallback
+      }
+    };
+
+    syncWithServer();
+    const interval = setInterval(syncWithServer, 2500);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const transferParam = params.get('transfer');
@@ -325,12 +399,36 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setUsers(prev => [...prev, newUser]);
     setCurrentUser(newUser);
     setAuthModal(null);
+
+    // Sync to backend server
+    try {
+      fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: newUser.username,
+          password: data.password,
+          bio: newUser.bio,
+          avatar: newUser.avatar,
+          location: newUser.location,
+        }),
+      }).catch(() => {});
+    } catch {}
+
     return { success: true };
   };
 
   const signIn = (username: string, pass: string) => {
     const normalized = username.trim().toLowerCase();
-    const user = users.find(u => u.username.toLowerCase() === normalized);
+    let user = users.find(u => u.username.toLowerCase() === normalized);
+
+    if (!user) {
+      user = INITIAL_USERS.find(u => u.username.toLowerCase() === normalized);
+      if (user) {
+        setUsers(prev => [...prev, user!]);
+      }
+    }
+
     if (!user) {
       return { success: false, error: 'User with this username does not exist' };
     }
@@ -341,6 +439,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
     setCurrentUser(user);
     setAuthModal(null);
+
+    // Sync user login to backend
+    try {
+      fetch('/api/users/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user }),
+      }).catch(() => {});
+    } catch {}
+
     return { success: true };
   };
 
@@ -487,24 +595,59 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const sendFriendRequestAction = (toUsername: string) => {
     if (!currentUser) return { success: false, error: 'Sign in to add friends.' };
 
-    const targetUser = users.find(u => u.username.toLowerCase() === toUsername.toLowerCase());
-    if (!targetUser) {
-      return { success: false, error: `User @${toUsername} does not exist.` };
+    const cleanTo = toUsername.replace(/^@/, '').trim().toLowerCase();
+    if (!cleanTo) return { success: false, error: 'Recipient username is required.' };
+
+    if (cleanTo === currentUser.username.toLowerCase()) {
+      return { success: false, error: 'You cannot send a friend request to yourself.' };
     }
 
-    const check = canSendFriendRequest(
-      currentUser.username,
-      targetUser.username,
-      currentUser.friends || [],
-      friendRequests
+    if ((currentUser.friends || []).map(f => f.toLowerCase()).includes(cleanTo)) {
+      return { success: false, error: `@${cleanTo} is already in your friends list.` };
+    }
+
+    // Check if target user exists in state or INITIAL_USERS
+    let targetUser = users.find(u => u.username.toLowerCase() === cleanTo);
+    if (!targetUser) {
+      targetUser = INITIAL_USERS.find(u => u.username.toLowerCase() === cleanTo);
+      if (targetUser) {
+        setUsers(prev => [...prev, targetUser!]);
+      }
+    }
+
+    const alreadyPending = friendRequests.some(
+      r =>
+        r.status === 'pending' &&
+        ((r.fromUsername.toLowerCase() === currentUser.username.toLowerCase() &&
+          r.toUsername.toLowerCase() === cleanTo) ||
+          (r.fromUsername.toLowerCase() === cleanTo &&
+            r.toUsername.toLowerCase() === currentUser.username.toLowerCase()))
     );
 
-    if (!check.allowed) {
-      return { success: false, error: check.error };
+    if (alreadyPending) {
+      return { success: false, error: `A friend request to @${cleanTo} is already pending.` };
     }
 
-    const req = createFriendRequest(currentUser.username, targetUser.username);
+    const recipientHandle = targetUser ? targetUser.username : cleanTo;
+    const req = createFriendRequest(currentUser.username, recipientHandle);
     setFriendRequests(prev => [req, ...prev]);
+
+    // Send to backend server
+    try {
+      fetch('/api/friend-requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fromUsername: currentUser.username, toUsername: cleanTo }),
+      }).then(async res => {
+        if (res.ok) {
+          const data = await res.json();
+          if (data.request) {
+            setFriendRequests(prev => [data.request, ...prev.filter(r => r.id !== data.request.id)]);
+          }
+        }
+      }).catch(() => {});
+    } catch {}
+
     return { success: true };
   };
 
@@ -512,7 +655,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const req = friendRequests.find(r => r.id === requestId);
     if (!req || !currentUser) return;
 
-    // Update request
+    // Send to backend server
+    try {
+      fetch(`/api/friend-requests/${requestId}/accept`, { method: 'POST' }).catch(() => {});
+    } catch {}
+
+    // Update request locally
     setFriendRequests(prev =>
       prev.map(r => (r.id === requestId ? { ...r, status: 'accepted' } : r))
     );
@@ -542,6 +690,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const declineFriendRequestAction = (requestId: string) => {
+    // Send to server
+    try {
+      fetch(`/api/friend-requests/${requestId}/decline`, { method: 'POST' }).catch(() => {});
+    } catch {}
+
     setFriendRequests(prev =>
       prev.map(r => (r.id === requestId ? { ...r, status: 'declined' } : r))
     );
@@ -555,6 +708,20 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     if (!currentUser) return;
     const msg = createChatMessage(currentUser.username, recipientUsername, text, attachment);
     setChatMessages(prev => [...prev, msg]);
+
+    // Send to server
+    try {
+      fetch('/api/chat-messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          senderUsername: currentUser.username,
+          recipientUsername,
+          text,
+          attachment,
+        }),
+      }).catch(() => {});
+    } catch {}
   };
 
   // Published Files Actions

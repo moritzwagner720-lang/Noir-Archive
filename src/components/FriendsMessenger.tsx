@@ -91,13 +91,14 @@ export const FriendsMessenger: React.FC = () => {
   // Send a friend request
   const handleSendFriendRequest = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!addFriendInput.trim()) return;
+    const cleanHandle = addFriendInput.replace(/^@/, '').trim();
+    if (!cleanHandle) return;
 
-    const res = sendFriendRequestAction(addFriendInput.trim());
+    const res = sendFriendRequestAction(cleanHandle);
     if (res.success) {
       setRequestFeedback({
         success: true,
-        message: `Friend request sent to @${addFriendInput.trim()}!`,
+        message: `Friend request sent to @${cleanHandle}!`,
       });
       setAddFriendInput('');
     } else {
@@ -455,7 +456,21 @@ export const FriendsMessenger: React.FC = () => {
                 .map(u => (
                   <button
                     key={u.id}
-                    onClick={() => sendFriendRequestAction(u.username)}
+                    onClick={() => {
+                      const res = sendFriendRequestAction(u.username);
+                      if (res.success) {
+                        setRequestFeedback({
+                          success: true,
+                          message: `Friend request sent to @${u.username}!`,
+                        });
+                      } else {
+                        setRequestFeedback({
+                          success: false,
+                          message: res.error || 'Failed to send request.',
+                        });
+                      }
+                      setTimeout(() => setRequestFeedback(null), 4000);
+                    }}
                     className={`rounded-full px-2.5 py-0.5 border text-[10px] transition-colors ${
                       isLight
                         ? 'border-slate-300 bg-white hover:border-blue-500 hover:text-blue-600'

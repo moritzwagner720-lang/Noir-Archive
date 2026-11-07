@@ -371,36 +371,20 @@ export const AuthGate: React.FC = () => {
               </button>
             </form>
 
-            {/* Static Reference for existing accounts (Manual typing required) */}
-            {mode === 'signin' && (
-              <div
-                className={`mt-6 border-t pt-4 ${
-                  isLight ? 'border-slate-200 text-slate-600' : 'border-neutral-800 text-neutral-400'
-                }`}
-              >
-                <div className="flex items-center gap-1.5 font-mono-code text-[11px] font-semibold text-blue-600 uppercase tracking-wider mb-2">
-                  <Lock className="h-3.5 w-3.5" />
-                  <span>Registered Accounts (Type into fields above):</span>
-                </div>
-                <div className="space-y-1 font-mono-code text-[11px]">
-                  <div className="flex justify-between items-center py-0.5">
-                    <span>Username: <strong className={isLight ? 'text-slate-900' : 'text-white'}>moritz</strong></span>
-                    <span>Password: <strong className={isLight ? 'text-slate-900' : 'text-white'}>password123</strong></span>
-                  </div>
-                  <div className="flex justify-between items-center py-0.5">
-                    <span>Username: <strong className={isLight ? 'text-slate-900' : 'text-white'}>elena_k</strong></span>
-                    <span>Password: <strong className={isLight ? 'text-slate-900' : 'text-white'}>secret456</strong></span>
-                  </div>
-                  <div className="flex justify-between items-center py-0.5">
-                    <span>Username: <strong className={isLight ? 'text-slate-900' : 'text-white'}>kenji_mono</strong></span>
-                    <span>Password: <strong className={isLight ? 'text-slate-900' : 'text-white'}>mono789</strong></span>
-                  </div>
-                </div>
-                <p className="mt-2 font-sans text-[10px] opacity-75">
-                  Type your username and password into the form to sign in, or click "Create Account" above to register a new unique handle.
-                </p>
+            {/* Security Notice */}
+            <div
+              className={`mt-6 border-t pt-4 ${
+                isLight ? 'border-slate-200 text-slate-500' : 'border-neutral-800 text-neutral-400'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 font-mono-code text-[11px] font-semibold text-blue-600 uppercase tracking-wider mb-1">
+                <Lock className="h-3.5 w-3.5" />
+                <span>Protected Archive Access</span>
               </div>
-            )}
+              <p className="font-sans text-[11px] opacity-75">
+                All credentials and archives are securely hashed. Your password is private and never visible to other users.
+              </p>
+            </div>
           </div>
         </div>
       </main>

@@ -217,9 +217,8 @@ export const TransferPortalView: React.FC<{ transferId: string }> = ({ transferI
             </button>
           </form>
 
-          {/* Demo helper hint if testing sample packages */}
           <p className="mt-4 font-mono-code text-[10px] text-neutral-500">
-            Demo package tip: password is <span className="text-neutral-400 underline cursor-pointer" onClick={() => setPasswordInput('review2024')}>review2024</span>
+            This archive is password-protected by the sender. Enter your delivery password above to access files.
           </p>
         </div>
       ) : (
