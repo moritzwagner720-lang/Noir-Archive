@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { TransferFile, ChatAttachment } from '../types';
 import JSZip from 'jszip';
+import { FriendRequestsModal } from './FriendRequestsModal';
 
 export const FriendsMessenger: React.FC = () => {
   const {
@@ -50,6 +51,7 @@ export const FriendsMessenger: React.FC = () => {
   const [showFolderModal, setShowFolderModal] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
   const [isZipping, setIsZipping] = useState<string | null>(null);
+  const [isRequestsModalOpen, setIsRequestsModalOpen] = useState(false);
 
   const isLight = theme === 'light';
 
@@ -88,13 +90,18 @@ export const FriendsMessenger: React.FC = () => {
     r => r.toUsername.toLowerCase() === currentUser.username.toLowerCase() && r.status === 'pending'
   );
 
+  // Pending outgoing requests
+  const pendingSent = friendRequests.filter(
+    r => r.fromUsername.toLowerCase() === currentUser.username.toLowerCase() && r.status === 'pending'
+  );
+
   // Send a friend request
-  const handleSendFriendRequest = (e: React.FormEvent) => {
+  const handleSendFriendRequest = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanHandle = addFriendInput.replace(/^@/, '').trim();
     if (!cleanHandle) return;
 
-    const res = sendFriendRequestAction(cleanHandle);
+    const res = await sendFriendRequestAction(cleanHandle);
     if (res.success) {
       setRequestFeedback({
         success: true,
@@ -104,11 +111,11 @@ export const FriendsMessenger: React.FC = () => {
     } else {
       setRequestFeedback({
         success: false,
-        message: res.error || 'Failed to send request.',
+        message: res.error || `User @${cleanHandle} does not exist.`,
       });
     }
 
-    setTimeout(() => setRequestFeedback(null), 4000);
+    setTimeout(() => setRequestFeedback(null), 5000);
   };
 
   // Chat conversation messages
@@ -271,32 +278,64 @@ export const FriendsMessenger: React.FC = () => {
           </p>
         </div>
 
-        {/* Add Friend Form */}
-        <form onSubmit={handleSendFriendRequest} className="flex items-center gap-2">
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono-code text-xs text-slate-400">
-              @
-            </span>
-            <input
-              type="text"
-              value={addFriendInput}
-              onChange={e => setAddFriendInput(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
-              aria-label="Add friend by username handle"
-              className={`w-48 sm:w-56 rounded-full border py-2 pl-7 pr-3 font-mono-code text-xs focus:border-blue-600 focus:outline-none transition-colors ${
-                isLight
-                  ? 'bg-white border-slate-300 text-slate-900'
-                  : 'bg-neutral-900 border-neutral-700 text-white'
-              }`}
-            />
-          </div>
+        {/* Right side: Manage Requests button directly OVER Add Friend form */}
+        <div className="flex flex-col sm:items-end gap-2.5">
           <button
-            type="submit"
-            className="flex items-center gap-1.5 rounded-full bg-blue-600 px-5 py-2 font-sans text-xs font-semibold text-white hover:bg-blue-500 transition-all shadow-md shadow-blue-600/25"
+            type="button"
+            onClick={() => setIsRequestsModalOpen(true)}
+            className={`flex items-center gap-2 rounded-full border px-4 py-1.5 font-sans text-xs font-semibold transition-all cursor-pointer ${
+              pendingIncoming.length > 0
+                ? 'border-blue-500 bg-blue-600/10 text-blue-600 dark:text-blue-400 hover:bg-blue-600/20 shadow-sm shadow-blue-600/20'
+                : isLight
+                ? 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400'
+                : 'border-neutral-800 bg-neutral-900/90 text-neutral-300 hover:bg-neutral-800 hover:border-neutral-700'
+            }`}
           >
-            <UserPlus className="h-3.5 w-3.5" />
-            <span>Add Friend</span>
+            <Users className="h-3.5 w-3.5 text-blue-600" />
+            <span>Friend Requests</span>
+            {pendingIncoming.length > 0 ? (
+              <span className="flex h-5 items-center justify-center rounded-full bg-blue-600 px-2 text-[10px] font-bold text-white animate-pulse">
+                {pendingIncoming.length} new
+              </span>
+            ) : pendingSent.length > 0 ? (
+              <span
+                className={`flex h-4 items-center justify-center rounded-full px-1.5 text-[10px] ${
+                  isLight ? 'bg-slate-200 text-slate-600' : 'bg-neutral-800 text-neutral-400'
+                }`}
+              >
+                {pendingSent.length} sent
+              </span>
+            ) : null}
           </button>
-        </form>
+
+          {/* Add Friend Form */}
+          <form onSubmit={handleSendFriendRequest} className="flex items-center gap-2">
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono-code text-xs text-slate-400">
+                @
+              </span>
+              <input
+                type="text"
+                placeholder="username (e.g. daddy)"
+                value={addFriendInput}
+                onChange={e => setAddFriendInput(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
+                aria-label="Add friend by username handle"
+                className={`w-48 sm:w-56 rounded-full border py-2 pl-7 pr-3 font-mono-code text-xs focus:border-blue-600 focus:outline-none transition-colors ${
+                  isLight
+                    ? 'bg-white border-slate-300 text-slate-900'
+                    : 'bg-neutral-900 border-neutral-700 text-white'
+                }`}
+              />
+            </div>
+            <button
+              type="submit"
+              className="flex items-center gap-1.5 rounded-full bg-blue-600 px-5 py-2 font-sans text-xs font-semibold text-white hover:bg-blue-500 transition-all shadow-md shadow-blue-600/25 cursor-pointer"
+            >
+              <UserPlus className="h-3.5 w-3.5" />
+              <span>Add Friend</span>
+            </button>
+          </form>
+        </div>
       </div>
 
       {/* Friend Request Feedback */}
@@ -456,8 +495,8 @@ export const FriendsMessenger: React.FC = () => {
                 .map(u => (
                   <button
                     key={u.id}
-                    onClick={() => {
-                      const res = sendFriendRequestAction(u.username);
+                    onClick={async () => {
+                      const res = await sendFriendRequestAction(u.username);
                       if (res.success) {
                         setRequestFeedback({
                           success: true,
@@ -926,6 +965,12 @@ export const FriendsMessenger: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Friend Requests Hub Modal */}
+      <FriendRequestsModal
+        isOpen={isRequestsModalOpen}
+        onClose={() => setIsRequestsModalOpen(false)}
+      />
     </section>
   );
 };

@@ -327,6 +327,14 @@ async function startServer() {
     res.json({ success: true });
   });
 
+  // Friend Requests - Cancel
+  app.post('/api/friend-requests/:id/cancel', (req, res) => {
+    const { id } = req.params;
+    store.friendRequests = store.friendRequests.filter(r => r.id !== id);
+    saveStore(store);
+    res.json({ success: true });
+  });
+
   // Chat Messages - Get
   app.get('/api/chat-messages', (req, res) => {
     const { user1, user2 } = req.query as { user1?: string; user2?: string };

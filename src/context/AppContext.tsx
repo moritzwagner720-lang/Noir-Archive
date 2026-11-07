@@ -101,9 +101,10 @@ interface AppContextType {
   // Friends & Chat
   activeChatFriend: string | null;
   setActiveChatFriend: (username: string | null) => void;
-  sendFriendRequestAction: (toUsername: string) => { success: boolean; error?: string };
+  sendFriendRequestAction: (toUsername: string) => Promise<{ success: boolean; error?: string }> | { success: boolean; error?: string };
   acceptFriendRequestAction: (requestId: string) => void;
   declineFriendRequestAction: (requestId: string) => void;
+  cancelFriendRequestAction: (requestId: string) => void;
   sendChatMessageAction: (recipientUsername: string, text: string, attachment?: ChatAttachment) => void;
 
   // Published Files & Public Downloads
@@ -592,7 +593,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   // Friends & Chat operations
-  const sendFriendRequestAction = (toUsername: string) => {
+  const sendFriendRequestAction = async (toUsername: string): Promise<{ success: boolean; error?: string }> => {
     if (!currentUser) return { success: false, error: 'Sign in to add friends.' };
 
     const cleanTo = toUsername.replace(/^@/, '').trim().toLowerCase();
@@ -606,7 +607,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       return { success: false, error: `@${cleanTo} is already in your friends list.` };
     }
 
-    // Check if target user exists in state or INITIAL_USERS
+    // Check if target user exists in local state or INITIAL_USERS
     let targetUser = users.find(u => u.username.toLowerCase() === cleanTo);
     if (!targetUser) {
       targetUser = INITIAL_USERS.find(u => u.username.toLowerCase() === cleanTo);
@@ -615,40 +616,72 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       }
     }
 
+    // If still not found, query backend server to see if user was recently registered
+    if (!targetUser) {
+      try {
+        const checkRes = await fetch(`/api/users/${encodeURIComponent(cleanTo)}`);
+        if (checkRes.ok) {
+          const sUser = await checkRes.json();
+          if (sUser && sUser.username) {
+            targetUser = sUser;
+            setUsers(prev => [...prev, sUser]);
+          }
+        }
+      } catch {}
+    }
+
+    // STRICT CHECK: User MUST exist to send a friend request!
+    if (!targetUser) {
+      return { success: false, error: `User @${cleanTo} does not exist.` };
+    }
+
     const alreadyPending = friendRequests.some(
       r =>
         r.status === 'pending' &&
         ((r.fromUsername.toLowerCase() === currentUser.username.toLowerCase() &&
-          r.toUsername.toLowerCase() === cleanTo) ||
-          (r.fromUsername.toLowerCase() === cleanTo &&
+          r.toUsername.toLowerCase() === targetUser!.username.toLowerCase()) ||
+          (r.fromUsername.toLowerCase() === targetUser!.username.toLowerCase() &&
             r.toUsername.toLowerCase() === currentUser.username.toLowerCase()))
     );
 
     if (alreadyPending) {
-      return { success: false, error: `A friend request to @${cleanTo} is already pending.` };
+      return { success: false, error: `A friend request to @${targetUser.username} is already pending.` };
     }
 
-    const recipientHandle = targetUser ? targetUser.username : cleanTo;
-    const req = createFriendRequest(currentUser.username, recipientHandle);
+    const req = createFriendRequest(currentUser.username, targetUser.username);
     setFriendRequests(prev => [req, ...prev]);
 
     // Send to backend server
     try {
-      fetch('/api/friend-requests', {
+      const res = await fetch('/api/friend-requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fromUsername: currentUser.username, toUsername: cleanTo }),
-      }).then(async res => {
-        if (res.ok) {
-          const data = await res.json();
-          if (data.request) {
-            setFriendRequests(prev => [data.request, ...prev.filter(r => r.id !== data.request.id)]);
-          }
+        body: JSON.stringify({ fromUsername: currentUser.username, toUsername: targetUser.username }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.request) {
+          setFriendRequests(prev => [data.request, ...prev.filter(r => r.id !== data.request.id)]);
         }
-      }).catch(() => {});
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        if (errData.error) {
+          setFriendRequests(prev => prev.filter(r => r.id !== req.id));
+          return { success: false, error: errData.error };
+        }
+      }
     } catch {}
 
     return { success: true };
+  };
+
+  const cancelFriendRequestAction = (requestId: string) => {
+    // Send to backend server
+    try {
+      fetch(`/api/friend-requests/${requestId}/cancel`, { method: 'POST' }).catch(() => {});
+    } catch {}
+
+    setFriendRequests(prev => prev.filter(r => r.id !== requestId));
   };
 
   const acceptFriendRequestAction = (requestId: string) => {
@@ -805,6 +838,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         sendFriendRequestAction,
         acceptFriendRequestAction,
         declineFriendRequestAction,
+        cancelFriendRequestAction,
         sendChatMessageAction,
         publishedPackages,
         publishPackageAction,
