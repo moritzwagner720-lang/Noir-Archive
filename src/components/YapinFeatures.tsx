@@ -102,13 +102,15 @@ export const YapinFeatures: React.FC = () => {
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <button
-                onClick={triggerDownload}
-                className="flex items-center gap-2 rounded-xl bg-[#ff6b00] px-4 py-2.5 text-xs font-bold text-black hover:bg-[#ff7d1f] transition-all cursor-pointer shadow-md"
+              <a
+                href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-xl bg-[#ff6b00] px-4 py-2.5 text-xs font-bold text-black hover:bg-[#ff7d1f] transition-all cursor-pointer shadow-md no-underline inline-flex"
               >
                 <span>Get Desktop App for Full Vault Access</span>
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </a>
             </div>
           </motion.div>
 
@@ -354,13 +356,15 @@ export const YapinFeatures: React.FC = () => {
             </p>
 
             <div className="mt-6">
-              <button
-                onClick={triggerDownload}
-                className="flex items-center gap-2 rounded-xl bg-[#ff6b00] px-5 py-3 font-sans text-xs font-bold text-black hover:bg-[#ff7d1f] transition-all cursor-pointer shadow-lg shadow-orange-500/20"
+              <a
+                href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-xl bg-[#ff6b00] px-5 py-3 font-sans text-xs font-bold text-black hover:bg-[#ff7d1f] transition-all cursor-pointer shadow-lg shadow-orange-500/20 no-underline inline-flex"
               >
                 <span>Download Desktop App</span>
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </a>
             </div>
           </motion.div>
 

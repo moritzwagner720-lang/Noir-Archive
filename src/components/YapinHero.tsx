@@ -60,12 +60,9 @@ export const YapinHero: React.FC<YapinHeroProps> = ({
             <motion.a
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-              download="Noir Archive Setup.exe"
-              onClick={(e) => {
-                e.preventDefault();
-                downloadSetupExe();
-              }}
+              href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2.5 rounded-2xl bg-[#ff6b00] px-7 py-4 font-sans text-xs sm:text-sm font-bold text-black shadow-xl shadow-orange-500/25 hover:bg-[#ff7d1f] transition-all cursor-pointer no-underline inline-flex"
             >
               <Download className="h-4 w-4 stroke-[2.5]" />
@@ -79,12 +76,14 @@ export const YapinHero: React.FC<YapinHeroProps> = ({
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-4 flex items-center gap-4 text-xs font-mono text-neutral-400"
           >
-            <button
-              onClick={onOpenDownload}
-              className="hover:text-white transition-colors cursor-pointer"
+            <a
+              href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors cursor-pointer no-underline"
             >
               Windows 10 / 11 · 64-bit · Noir Archive Setup.exe
-            </button>
+            </a>
             <span>·</span>
             <span className="text-emerald-400">Byte-for-byte SHA-256</span>
           </motion.div>

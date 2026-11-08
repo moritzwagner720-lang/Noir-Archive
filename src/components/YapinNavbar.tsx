@@ -59,14 +59,16 @@ export const YapinNavbar: React.FC<YapinNavbarProps> = ({
 
         {/* Center Nav Links */}
         <nav className="hidden md:flex items-center gap-7">
-          <button
-            onClick={onOpenDownload}
-            className={`text-xs font-semibold transition-colors cursor-pointer ${
+          <a
+            href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`text-xs font-semibold transition-colors cursor-pointer no-underline ${
               isLight ? 'text-stone-600 hover:text-stone-900' : 'text-neutral-300 hover:text-white'
             }`}
           >
             Download
-          </button>
+          </a>
 
           <button
             onClick={onOpenDevelopers}
@@ -104,12 +106,9 @@ export const YapinNavbar: React.FC<YapinNavbarProps> = ({
           <motion.a
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-            download="Noir Archive Setup.exe"
-            onClick={(e) => {
-              e.preventDefault();
-              downloadSetupExe();
-            }}
+            href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1.5 rounded-xl bg-[#ff6b00] px-4 py-2 font-sans text-xs font-bold text-black shadow-md shadow-orange-950/40 hover:bg-[#ff7d1f] transition-all cursor-pointer no-underline"
           >
             <Download className="h-3.5 w-3.5 stroke-[2.5]" />

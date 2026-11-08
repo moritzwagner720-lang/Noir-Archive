@@ -51,12 +51,9 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
               <ul className="space-y-2.5 text-neutral-300">
                 <li>
                   <a
-                    href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-                    download="Noir Archive Setup.exe"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      downloadSetupExe();
-                    }}
+                    href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="hover:text-white transition-colors text-left cursor-pointer no-underline block"
                   >
                     Download Desktop (.exe)

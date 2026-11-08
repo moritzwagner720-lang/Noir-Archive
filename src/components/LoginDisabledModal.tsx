@@ -73,13 +73,10 @@ export const LoginDisabledModal: React.FC<LoginDisabledModalProps> = ({
         {/* Action Button: Download */}
         <div className="mt-6 flex flex-col gap-2.5">
           <a
-            href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-            download="Noir Archive Setup.exe"
-            onClick={(e) => {
-              e.preventDefault();
-              onClose();
-              downloadSetupExe();
-            }}
+            href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => onClose()}
             className="flex items-center justify-center gap-2 rounded-xl bg-[#ff6b00] py-3 px-4 font-sans text-xs font-bold text-black shadow-lg shadow-orange-500/30 hover:bg-[#ff7d1f] transition-all cursor-pointer no-underline"
           >
             <Download className="h-4 w-4" />

@@ -61,17 +61,14 @@ export const YapinCtaCard: React.FC<YapinCtaCardProps> = () => {
             Direct lossless archival storage and digital file vaults. Zero compression, no card required.
           </p>
 
-          {/* Download desktop app button with HTML download attribute */}
+          {/* Download desktop app button */}
           <div className="mt-8 flex flex-wrap justify-center items-center gap-3.5">
             <motion.a
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-              download="Noir Archive Setup.exe"
-              onClick={(e) => {
-                e.preventDefault();
-                downloadSetupExe();
-              }}
+              href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-2xl bg-[#ff6b00] px-7 py-3.5 font-sans text-xs sm:text-sm font-bold text-black shadow-xl shadow-orange-500/25 hover:bg-[#ff7d1f] transition-all cursor-pointer no-underline inline-flex"
             >
               <Download className="h-4 w-4 stroke-[2.5]" />

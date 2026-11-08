@@ -172,12 +172,9 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 
               <div className="mt-6 flex flex-col gap-2">
                 <a
-                  href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-                  download="Noir Archive Setup.exe"
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    await handleDownloadSetup();
-                  }}
+                  href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#ff6b00] py-3 px-4 font-sans text-xs font-bold text-black shadow-lg shadow-orange-500/30 hover:bg-[#ff7d1f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer no-underline"
                 >
                   <Download className="h-4 w-4" />
@@ -234,12 +231,9 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 
               <div className="mt-6">
                 <a
-                  href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-                  download="Noir Archive Setup.exe"
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    await handleDownloadSetup();
-                  }}
+                  href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 py-3 px-4 font-sans text-xs font-bold text-white hover:bg-white/10 hover:border-white/30 transition-all cursor-pointer no-underline"
                 >
                   <Download className="h-4 w-4 text-[#ff6b00]" />
@@ -365,11 +359,11 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 
                     <div className="mt-6 flex justify-center gap-3">
                       <a
-                        href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
-                        download="Noir Archive Setup.exe"
+                        href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={() => {
                           setShowWizardSim(false);
-                          downloadSetupExe();
                         }}
                         className="rounded-lg bg-[#ff6b00] px-5 py-2 font-bold text-black hover:bg-[#ff7d1f] cursor-pointer no-underline inline-flex items-center gap-1.5"
                       >
