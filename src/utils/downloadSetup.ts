@@ -1,47 +1,36 @@
 /**
- * Cleanly downloads /downloads/Setup.exe as "Noir Archive Setup.exe"
+ * Cleanly downloads the Windows installer from:
+ * https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe
+ * Filename: "Noir Archive Setup.exe"
  */
+
+export const GITHUB_DOWNLOAD_URL =
+  'https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe';
+
 export async function downloadSetupExe(
-  url = '/downloads/Setup.exe',
+  url = GITHUB_DOWNLOAD_URL,
   filename = 'Noir Archive Setup.exe'
 ): Promise<boolean> {
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${url}: ${response.status}`);
-    }
-
-    const blob = await response.blob();
-    const octetBlob = new Blob([blob], { type: 'application/octet-stream' });
-    const blobUrl = URL.createObjectURL(octetBlob);
-
     const link = document.createElement('a');
-    link.href = blobUrl;
+    link.href = url;
     link.download = filename;
+    link.setAttribute('download', filename);
     link.style.display = 'none';
 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
-    setTimeout(() => {
-      URL.revokeObjectURL(blobUrl);
-    }, 5000);
-
     return true;
   } catch (err) {
-    console.error('Error downloading Setup.exe via blob:', err);
-
+    console.error('Error initiating installer download:', err);
     try {
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      window.location.assign(url);
       return true;
     } catch {
       return false;
     }
   }
 }
+

@@ -7,7 +7,6 @@ interface LoginDisabledModalProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenDownload: () => void;
-  onOpenBrowserApp?: () => void;
 }
 
 export const LoginDisabledModal: React.FC<LoginDisabledModalProps> = ({
@@ -74,9 +73,13 @@ export const LoginDisabledModal: React.FC<LoginDisabledModalProps> = ({
         {/* Action Button: Download */}
         <div className="mt-6 flex flex-col gap-2.5">
           <a
-            href="/downloads/Setup.exe"
+            href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
             download="Noir Archive Setup.exe"
-            onClick={onClose}
+            onClick={(e) => {
+              e.preventDefault();
+              onClose();
+              downloadSetupExe();
+            }}
             className="flex items-center justify-center gap-2 rounded-xl bg-[#ff6b00] py-3 px-4 font-sans text-xs font-bold text-black shadow-lg shadow-orange-500/30 hover:bg-[#ff7d1f] transition-all cursor-pointer no-underline"
           >
             <Download className="h-4 w-4" />

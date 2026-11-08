@@ -8,16 +8,26 @@ import {
   FolderOpen,
   Download,
   Package,
+  ExternalLink,
+  ShieldCheck,
+  Lock,
+  Copy,
+  Check,
+  Sparkles,
 } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useApp } from '../context/AppContext';
 import { downloadSetupExe } from '../utils/downloadSetup';
+import { UserAvatar } from './UserAvatar';
 
-export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
-  onOpenBrowserApp,
-}) => {
+export const YapinFeatures: React.FC = () => {
+  const {
+    users,
+    theme,
+  } = useApp();
+
+  const isLight = theme === 'light';
   const [serverSearch, setServerSearch] = useState('');
-  const [activeTab, setActiveTab] = useState<'online' | 'all' | 'pending' | 'blocked' | 'add'>('online');
-  const [clientInput, setClientInput] = useState('');
-  const [transferSent, setTransferSent] = useState(false);
 
   const publicVaults = [
     {
@@ -26,6 +36,9 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
       tagline: 'The Official File Vault & Data Hub',
       members: '76,230',
       icon: '📁',
+      category: 'Official Vault',
+      filesCount: '1,420 files',
+      size: '84.2 GB',
     },
     {
       id: 's2',
@@ -33,6 +46,9 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
       tagline: 'Direct uncompressed packages, developer assets & ISOs',
       members: '18,490',
       icon: '⚙️',
+      category: 'Developer Hub',
+      filesCount: '920 files',
+      size: '142.0 GB',
     },
     {
       id: 's3',
@@ -40,13 +56,17 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
       tagline: 'Zero-compression batch packages & single-click ZIP archives',
       members: '12,850',
       icon: '📦',
+      category: 'Client Portals',
+      filesCount: '3,840 files',
+      size: '290.5 GB',
     },
   ];
 
   const filteredVaults = serverSearch.trim()
     ? publicVaults.filter(s =>
         s.name.toLowerCase().includes(serverSearch.toLowerCase()) ||
-        s.tagline.toLowerCase().includes(serverSearch.toLowerCase())
+        s.tagline.toLowerCase().includes(serverSearch.toLowerCase()) ||
+        s.category.toLowerCase().includes(serverSearch.toLowerCase())
       )
     : publicVaults;
 
@@ -62,12 +82,18 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Left Text Column */}
-          <div className="lg:col-span-5">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5"
+          >
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#ff6b00]">
               DISCOVER
             </span>
 
-            <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
               Find your community vaults
             </h2>
 
@@ -75,19 +101,25 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
               Public vaults you can search by topic, project, or category. Explore archives, stage folder deliveries, or host shared datasets with zero loss.
             </p>
 
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 onClick={triggerDownload}
-                className="flex items-center gap-2 text-xs font-bold text-[#ff6b00] hover:text-[#ff8533] transition-colors cursor-pointer"
+                className="flex items-center gap-2 rounded-xl bg-[#ff6b00] px-4 py-2.5 text-xs font-bold text-black hover:bg-[#ff7d1f] transition-all cursor-pointer shadow-md"
               >
                 <span>Get Desktop App for Full Vault Access</span>
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Visual Window: Discover public vaults */}
-          <div className="lg:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7"
+          >
             <div className="rounded-3xl border border-white/[0.12] bg-[#101115] p-5 sm:p-7 shadow-[0_20px_70px_rgba(0,0,0,0.7)]">
               
               {/* Header row */}
@@ -96,15 +128,18 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
                   <Compass className="h-4 w-4 text-[#ff6b00]" />
                   <span>Discover Public Vaults</span>
                 </div>
-                <span className="text-[11px] font-mono text-neutral-500">
-                  76k+ members online
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[11px] font-mono text-neutral-400">
+                    76k+ members online
+                  </span>
+                </div>
               </div>
 
               {/* Title inside mockup */}
               <div className="mb-4">
                 <h3 className="font-sans text-lg font-bold text-white">Find your archives</h3>
-                <p className="text-xs text-neutral-400">Public data repositories on Noir Archive. Search by tag or category.</p>
+                <p className="text-xs text-neutral-400">Public data repositories on Noir Archive. Search by tag, category, or creator.</p>
               </div>
 
               {/* Search Bar */}
@@ -114,7 +149,7 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
                   type="text"
                   value={serverSearch}
                   onChange={e => setServerSearch(e.target.value)}
-                  placeholder="Search file archives..."
+                  placeholder="Search file archives, raw packages, presets..."
                   className="w-full rounded-xl border border-white/10 bg-[#16171d] py-2.5 pl-10 pr-4 text-xs text-white placeholder:text-neutral-500 focus:border-[#ff6b00] focus:outline-none transition-colors"
                 />
               </div>
@@ -126,42 +161,51 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
               {/* Vault Cards */}
               <div className="space-y-3">
                 {filteredVaults.map(vault => (
-                  <div
+                  <motion.div
                     key={vault.id}
+                    whileHover={{ y: -2 }}
                     className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#15161c] p-4 transition-all hover:border-orange-500/50 hover:bg-[#1a1b22]"
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-[#ff6b00] to-amber-500 flex items-center justify-center text-lg shadow-md">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-tr from-[#ff6b00] to-amber-500 flex items-center justify-center text-lg shadow-md">
                           {vault.icon}
                         </div>
-                        <div>
-                          <h4 className="font-sans font-bold text-sm text-white group-hover:text-[#ff6b00] transition-colors">
-                            {vault.name}
-                          </h4>
-                          <p className="text-xs text-neutral-400">{vault.tagline}</p>
-                          <div className="mt-1 flex items-center gap-2 text-[10px] font-mono text-neutral-500">
-                            <span className="flex items-center gap-1">
-                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                              {vault.members} active users
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-sans font-bold text-sm text-white group-hover:text-[#ff6b00] transition-colors truncate">
+                              {vault.name}
+                            </h4>
+                            <span className="hidden sm:inline-block rounded bg-white/5 px-1.5 py-0.5 text-[10px] font-mono text-neutral-400">
+                              {vault.category}
                             </span>
+                          </div>
+                          <p className="text-xs text-neutral-400 truncate">{vault.tagline}</p>
+                          <div className="mt-1 flex items-center gap-3 text-[10px] font-mono text-neutral-500">
+                            <span>{vault.members} members</span>
+                            <span>·</span>
+                            <span>{vault.filesCount}</span>
+                            <span>·</span>
+                            <span className="text-[#ff6b00]">{vault.size}</span>
                           </div>
                         </div>
                       </div>
 
-                      <button
-                        onClick={triggerDownload}
-                        className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#ff6b00] hover:text-black hover:border-[#ff6b00] transition-all cursor-pointer"
-                      >
-                        Explore
-                      </button>
+                      <div className="shrink-0">
+                        <button
+                          onClick={triggerDownload}
+                          className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#ff6b00] hover:text-black hover:border-[#ff6b00] transition-all cursor-pointer"
+                        >
+                          Explore
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -170,11 +214,17 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
       <section className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
-          {/* Left Visual Window */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
+          {/* Left Visual Window matching user attachment image_7e4a9ecb.png */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7 order-2 lg:order-1"
+          >
             <div className="rounded-3xl border border-white/[0.12] bg-[#101115] shadow-[0_20px_70px_rgba(0,0,0,0.7)] overflow-hidden">
               
-              {/* DM Top Bar */}
+              {/* Window Top Bar: Non-interactive small tabs */}
               <div className="flex flex-wrap items-center justify-between border-b border-white/[0.08] bg-[#16171b] px-4 py-3 gap-2">
                 <div className="flex items-center gap-4 text-xs font-semibold">
                   <span className="flex items-center gap-1.5 text-white">
@@ -182,121 +232,137 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
                     Clients & Collaborators
                   </span>
 
-                  <div className="flex items-center gap-1 text-xs">
-                    {(['online', 'all', 'pending'] as const).map(tab => (
-                      <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`px-2 py-1 rounded-md transition-colors capitalize ${
-                          activeTab === tab ? 'bg-white/15 text-white' : 'text-neutral-400 hover:text-white'
-                        }`}
-                      >
-                        {tab}
-                      </button>
-                    ))}
+                  {/* Non-interactive small tabs matching exact screenshot styling */}
+                  <div className="flex items-center gap-1.5 text-xs select-none pointer-events-none">
+                    <span className="px-2.5 py-1 rounded-lg bg-white/15 text-white font-bold">
+                      Team & Clients
+                    </span>
+                    <span className="px-2.5 py-1 text-neutral-400">
+                      Active Packages (0)
+                    </span>
+                    <span className="px-2.5 py-1 text-neutral-400">
+                      Pending
+                    </span>
                   </div>
                 </div>
 
-                <button
-                  onClick={() => setActiveTab('add')}
-                  className="rounded-lg bg-[#ff6b00] px-3 py-1 text-xs font-bold text-black hover:bg-[#ff7d1f] transition-colors cursor-pointer"
-                >
-                  Send Transfer
-                </button>
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[11px] font-mono text-neutral-400">Vault Sync Online</span>
+                </div>
               </div>
 
               {/* Window Body */}
-              <div className="flex h-[320px] divide-x divide-white/[0.06]">
+              <div className="flex min-h-[340px] divide-x divide-white/[0.06]">
                 
-                {/* Left Mini Column */}
+                {/* Left Mini Column: Non-interactive static badges */}
                 <div className="w-52 shrink-0 bg-[#131418] p-3 hidden sm:block">
                   <div className="font-mono text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">
                     ACTIVE ARCHIVES
                   </div>
                   
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2 rounded-xl bg-white/10 px-2.5 py-2 text-xs font-semibold text-white">
-                      <Package className="h-4 w-4 text-[#ff6b00]" />
-                      <span>Deliveries</span>
+                    <div className="w-full flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-neutral-400 select-none pointer-events-none">
+                      <div className="flex items-center gap-2">
+                        <Package className="h-4 w-4 text-[#ff6b00]" />
+                        <span>Deliveries</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-[#ff6b00]">0</span>
                     </div>
 
-                    <div className="pt-2">
-                      <div className="flex items-center justify-between text-[10px] font-mono text-neutral-500 px-2 mb-1">
-                        <span>DATA PACKAGES</span>
+                    <div className="w-full flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-white bg-white/10 select-none pointer-events-none">
+                      <div className="flex items-center gap-2">
+                        <Users className="h-4 w-4 text-emerald-400" />
+                        <span>Contacts</span>
                       </div>
-                      <p className="px-2 text-[11px] text-neutral-500 italic">
-                        Select a recipient or generate a direct link.
-                      </p>
+                      <span className="text-[10px] font-mono text-neutral-400">4</span>
+                    </div>
+
+                    <div className="pt-3">
+                      <div className="flex items-center justify-between text-[10px] font-mono text-neutral-500 px-2 mb-1">
+                        <span>INTEGRITY STATUS</span>
+                      </div>
+                      <div className="px-2 py-1 rounded bg-white/5 text-[11px] text-emerald-400 font-mono flex items-center gap-1.5 select-none pointer-events-none">
+                        <ShieldCheck className="h-3 w-3" />
+                        <span>0% Loss Verified</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Right Main Content */}
-                <div className="flex-1 bg-[#1a1b20] p-6 flex flex-col justify-center items-center text-center">
-                  {activeTab === 'add' ? (
-                    <div className="w-full max-w-sm space-y-3">
-                      <h4 className="font-sans font-bold text-sm text-white">NEW FILE TRANSFER</h4>
-                      <p className="text-xs text-neutral-400">
-                        Deliver full-resolution packages and folders directly to any recipient.
-                      </p>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={clientInput}
-                          onChange={e => setClientInput(e.target.value)}
-                          placeholder="Recipient handle or email..."
-                          className="flex-1 rounded-xl border border-white/10 bg-[#141519] px-3 py-2 text-xs text-white focus:border-[#ff6b00] focus:outline-none"
-                        />
-                        <button
-                          onClick={() => {
-                            if (!clientInput.trim()) return;
-                            setTransferSent(true);
-                            setTimeout(() => setTransferSent(false), 3000);
-                          }}
-                          className="rounded-xl bg-[#ff6b00] px-4 py-2 text-xs font-bold text-black hover:bg-[#ff7d1f] cursor-pointer"
-                        >
-                          Send
-                        </button>
-                      </div>
-                      {transferSent && (
-                        <p className="text-xs text-emerald-400 font-mono">
-                          Direct transfer created for {clientInput}!
-                        </p>
-                      )}
+                {/* Right Main Content: Active Creative Collaborators with Colorful First-Letter Avatars */}
+                <div className="flex-1 bg-[#1a1b20] p-4 sm:p-5 overflow-y-auto max-h-[380px]">
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between pb-2 border-b border-white/5">
+                      <span className="text-xs font-bold text-white">Active Creative Collaborators</span>
+                      <span className="text-[11px] font-mono text-emerald-400">Ready for instant delivery</span>
                     </div>
-                  ) : (
-                    <div>
-                      <div className="mx-auto h-12 w-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-3">
-                        <Users className="h-6 w-6 text-[#ff6b00]" />
+
+                    {users.slice(0, 4).map(u => (
+                      <div
+                        key={u.id}
+                        className="flex items-center justify-between rounded-xl border border-white/10 bg-[#131418] p-3"
+                      >
+                        <div className="flex items-center gap-3">
+                          {/* Colorful First-Letter Profile Picture with Online Status Indicator */}
+                          <UserAvatar
+                            username={u.username}
+                            name={u.username}
+                            size="md"
+                            showOnline={true}
+                          />
+                          <div>
+                            <div className="font-sans font-bold text-xs text-white">
+                              @{u.username}
+                            </div>
+                            <div className="text-[11px] text-neutral-400 truncate max-w-[180px]">
+                              {u.bio || 'Digital creator & archivist'}
+                            </div>
+                          </div>
+                        </div>
+
+                        <span className="rounded-lg bg-white/5 border border-white/10 px-2.5 py-1 text-[11px] font-mono text-neutral-400">
+                          Active
+                        </span>
                       </div>
-                      <h4 className="font-sans font-bold text-sm text-white">
-                        Direct Client Staging
-                      </h4>
-                      <p className="mt-1 text-xs text-neutral-400 font-sans max-w-xs">
-                        Ready to transfer uncompressed files with custom password protection and instant ZIP packing.
-                      </p>
-                    </div>
-                  )}
+                    ))}
+                  </div>
                 </div>
 
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Text Column */}
-          <div className="lg:col-span-5 order-1 lg:order-2">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5 order-1 lg:order-2"
+          >
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#ff6b00]">
-              DIRECT DELIVERIES
+              TEAM DIRECTORIES
             </span>
 
-            <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              One list, everyone you share with
+            <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+              One list, everyone you collaborate with
             </h2>
 
             <p className="mt-5 text-sm sm:text-base text-neutral-300 leading-relaxed">
-              Clients, teammates, and partners in a single column. Transfer entire directories with byte-for-byte fidelity and zero compression artifacts.
+              Clients, teammates, and creative partners in a single column. Access shared digital vaults with byte-for-byte fidelity and zero compression artifacts.
             </p>
-          </div>
+
+            <div className="mt-6">
+              <button
+                onClick={triggerDownload}
+                className="flex items-center gap-2 rounded-xl bg-[#ff6b00] px-5 py-3 font-sans text-xs font-bold text-black hover:bg-[#ff7d1f] transition-all cursor-pointer shadow-lg shadow-orange-500/20"
+              >
+                <span>Download Desktop App</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </motion.div>
 
         </div>
       </section>
@@ -304,3 +370,4 @@ export const YapinFeatures: React.FC<{ onOpenBrowserApp?: () => void }> = ({
     </div>
   );
 };
+

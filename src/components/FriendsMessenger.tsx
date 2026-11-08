@@ -24,6 +24,7 @@ import {
 import { TransferFile, ChatAttachment } from '../types';
 import JSZip from 'jszip';
 import { FriendRequestsModal } from './FriendRequestsModal';
+import { UserAvatar } from './UserAvatar';
 
 export const FriendsMessenger: React.FC = () => {
   const {
@@ -508,17 +509,12 @@ export const FriendsMessenger: React.FC = () => {
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
-                        <div className="relative shrink-0">
-                          <img
-                            src={
-                              friendUser?.avatar ||
-                              'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
-                            }
-                            alt={handle}
-                            className="h-9 w-9 rounded-full object-cover ring-1 ring-orange-500/40"
-                          />
-                          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-[#ff6b00] ring-2 ring-white dark:ring-black" />
-                        </div>
+                        <UserAvatar
+                          username={handle}
+                          name={handle}
+                          size="md"
+                          showOnline={true}
+                        />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-1">
                             <p className={`font-mono-code text-xs font-semibold truncate ${isLight ? 'text-stone-900' : 'text-orange-100'}`}>

@@ -11,6 +11,7 @@ import {
   AlertCircle,
   UserCheck,
 } from 'lucide-react';
+import { UserAvatar } from './UserAvatar';
 
 interface FriendRequestsModalProps {
   isOpen: boolean;
@@ -203,10 +204,11 @@ export const FriendRequestsModal: React.FC<FriendRequestsModalProps> = ({
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <img
-                          src={userDetail?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}
-                          alt={req.fromUsername}
-                          className="h-10 w-10 rounded-full object-cover ring-1 ring-orange-500/30 shrink-0"
+                        <UserAvatar
+                          username={req.fromUsername}
+                          name={req.fromUsername}
+                          size="md"
+                          showOnline={true}
                         />
                         <div className="min-w-0">
                           <p className="font-mono-code text-xs font-bold text-[#ff6b00]">@{req.fromUsername}</p>
@@ -260,10 +262,11 @@ export const FriendRequestsModal: React.FC<FriendRequestsModalProps> = ({
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <img
-                          src={targetUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}
-                          alt={req.toUsername}
-                          className="h-10 w-10 rounded-full object-cover ring-1 ring-orange-500/30 shrink-0"
+                        <UserAvatar
+                          username={req.toUsername}
+                          name={req.toUsername}
+                          size="md"
+                          showOnline={false}
                         />
                         <div className="min-w-0">
                           <p className="font-mono-code text-xs font-bold text-[#ff6b00]">@{req.toUsername}</p>

@@ -59,9 +59,10 @@ export const SendTransferModal: React.FC = () => {
   const [expiryDays, setExpiryDays] = useState<number | null>(14);
   const [error, setError] = useState<string | null>(null);
 
-  // User's own projects and photos
-  const userProjects = projects.filter(p => p.userId === currentUser?.id);
-  const userPhotos = photos.filter(p => p.userId === currentUser?.id);
+  // Active user (logged in or default archivist so guests can transfer freely)
+  const activeUser = currentUser || users[0];
+  const userProjects = projects.filter(p => p.userId === activeUser?.id);
+  const userPhotos = photos.filter(p => p.userId === activeUser?.id);
 
   // Initialize form state when opened
   useEffect(() => {
@@ -83,14 +84,14 @@ export const SendTransferModal: React.FC = () => {
       }
 
       // Default recipient to another user if available
-      const otherUser = users.find(u => u.id !== currentUser?.id);
+      const otherUser = users.find(u => u.id !== activeUser?.id);
       if (otherUser) {
         setRecipientUsername(otherUser.username);
       }
     }
   }, [isTransferModalOpen]);
 
-  if (!isTransferModalOpen || !currentUser) return null;
+  if (!isTransferModalOpen) return null;
 
   // Handle local disk file upload
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,8 +174,8 @@ export const SendTransferModal: React.FC = () => {
     }
 
     const res = sendTransfer({
-      senderId: currentUser.id,
-      senderUsername: currentUser.username,
+      senderId: activeUser?.id || 'guest',
+      senderUsername: activeUser?.username || 'moritz',
       title: transferTitle,
       note: transferNote,
       recipientType,

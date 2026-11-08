@@ -5,15 +5,14 @@ import { downloadSetupExe } from '../utils/downloadSetup';
 interface YapinFooterProps {
   onOpenDownload: () => void;
   onOpenDevelopers: () => void;
-  onOpenPlus: () => void;
-  onOpenBrowserApp?: () => void;
 }
 
 export const YapinFooter: React.FC<YapinFooterProps> = ({
   onOpenDownload,
   onOpenDevelopers,
-  onOpenPlus,
 }) => {
+  const [notice, setNotice] = React.useState<string | null>(null);
+
   const triggerDownload = () => {
     downloadSetupExe();
   };
@@ -37,7 +36,7 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
             </div>
 
             <p className="mt-4 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              A minimalist high-speed file vault and zero-compression client file delivery archive.
+              A minimalist high-speed file vault and zero-compression digital archive.
             </p>
           </div>
 
@@ -52,8 +51,12 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
               <ul className="space-y-2.5 text-neutral-300">
                 <li>
                   <a
-                    href="/downloads/Setup.exe"
+                    href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe"
                     download="Noir Archive Setup.exe"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      downloadSetupExe();
+                    }}
                     className="hover:text-white transition-colors text-left cursor-pointer no-underline block"
                   >
                     Download Desktop (.exe)
@@ -65,28 +68,22 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
                   </button>
                 </li>
                 <li>
-                  <button onClick={onOpenPlus} className="hover:text-white transition-colors text-left flex items-center gap-1.5 cursor-pointer">
-                    <span>Noir Plus</span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#ff6b00]" />
-                  </button>
-                </li>
-                <li>
                   <button onClick={triggerDownload} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Client Portals
+                    Vault System
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("FanKit: Download Noir Archive brand kit & icons!")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('FanKit: High-res badges & SVG logos are bundled in the repository.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     FanKit & Assets
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Roadmap: Offline desktop synchronization & batch hash verification.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Roadmap: Offline desktop synchronization & batch hash verification.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Roadmap
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Bug Bounty: Submit security tickets to security@noirarchive.gg")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Security & Bug Bounty: Verified reports are handled with priority.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Bugs & Feedback
                   </button>
                 </li>
@@ -111,17 +108,17 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Guidelines: Community vault standards & open data compliance.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Guidelines: Open data compliance & zero loss storage rules.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Guidelines
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Archive Engine: Batch transfer caching & checksum tooling.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Archive Engine: Direct streaming chunk router with SHA-256.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Archive Engine
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Partners: Independent studios, developers & teams.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Partners: Independent studios, creative agencies, and developers.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Partners
                   </button>
                 </li>
@@ -135,29 +132,29 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
               </h4>
               <ul className="space-y-2.5 text-neutral-300">
                 <li>
-                  <button onClick={() => alert("Terms of Service: Free, open and fair.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Terms: Free to use forever. Zero ad tracking, no data resale.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Terms
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Privacy: End-to-end encrypted, zero data selling.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Privacy: Client transfers are end-to-end encrypted with custom passwords.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Privacy
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Copyright: You retain 100% rights to your work.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Copyright: You retain 100% intellectual rights to all uploaded files.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Copyright
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Security: TLS 1.3, SHA-256 signatures, encrypted vaults.")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button onClick={() => setNotice('Security: TLS 1.3, SHA-256 verification, and strict access tokens.')} className="hover:text-white transition-colors text-left cursor-pointer">
                     Security
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => alert("Contact: support@noirarchive.gg")} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <a href="mailto:support@noirarchive.gg" className="hover:text-white transition-colors text-left cursor-pointer no-underline block">
                     Contact
-                  </button>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -165,6 +162,19 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
           </div>
 
         </div>
+
+        {/* Temporary non-intrusive notice banner */}
+        {notice && (
+          <div className="mt-8 rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-2.5 text-xs text-[#ff6b00] flex items-center justify-between">
+            <span>{notice}</span>
+            <button
+              onClick={() => setNotice(null)}
+              className="text-neutral-400 hover:text-white ml-3 font-mono text-xs cursor-pointer"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
 
         {/* Bottom Row */}
         <div className="mt-16 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-neutral-500">
@@ -176,13 +186,6 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
           </div>
         </div>
 
-      </div>
-
-      {/* Subtle watermark text of Noir Archive */}
-      <div className="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 select-none opacity-[0.06] overflow-hidden whitespace-nowrap">
-        <span className="font-sans text-[120px] sm:text-[180px] md:text-[230px] font-black tracking-tight text-[#ff6b00]">
-          Noir Archive
-        </span>
       </div>
     </footer>
   );

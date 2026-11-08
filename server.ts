@@ -140,7 +140,7 @@ async function startServer() {
     if (fs.existsSync(filePath)) {
       res.download(filePath, 'Noir Archive Setup.exe');
     } else {
-      res.status(404).send('Setup.exe not found');
+      res.redirect('https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/latest/download/Setup.exe');
     }
   });
 
