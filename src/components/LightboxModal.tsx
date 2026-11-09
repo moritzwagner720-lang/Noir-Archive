@@ -169,7 +169,7 @@ export const LightboxModal: React.FC = () => {
                     <h4 className="font-mono-code text-xs font-semibold text-white group-hover:underline">
                       @{author.username}
                     </h4>
-                    <span className="font-mono-code text-[10px] text-violet-400">
+                    <span className="font-mono-code text-[10px] text-[#66d9ff]">
                       View Portfolio →
                     </span>
                   </div>
@@ -178,55 +178,54 @@ export const LightboxModal: React.FC = () => {
             )}
 
             {/* EXIF Data Grid */}
-            <div className="border border-neutral-800 p-3">
-              <h5 className="font-mono-code text-[10px] uppercase tracking-wider text-neutral-400 mb-2.5 flex items-center gap-1.5">
-                <Camera className="h-3 w-3" />
+            <div className="border border-[#38bdf8]/20 bg-[#07111f]/60 rounded-xl p-3">
+              <h5 className="font-mono-code text-[10px] uppercase tracking-wider text-[#a5e9ff] mb-2.5 flex items-center gap-1.5">
+                <Camera className="h-3 w-3 text-[#66d9ff]" />
                 Optical & Exposure Data
               </h5>
 
               <div className="space-y-2 font-mono-code text-[11px]">
-                <div className="flex justify-between border-b border-neutral-900 pb-1">
-                  <span className="text-neutral-400">Camera</span>
+                <div className="flex justify-between border-b border-white/5 pb-1">
+                  <span className="text-slate-400">Camera</span>
                   <span className="text-white text-right">{lightboxPhoto.exif.camera || 'Leica M10'}</span>
                 </div>
-                <div className="flex justify-between border-b border-neutral-900 pb-1">
-                  <span className="text-neutral-400">Optics</span>
+                <div className="flex justify-between border-b border-white/5 pb-1">
+                  <span className="text-slate-400">Optics</span>
                   <span className="text-white text-right">{lightboxPhoto.exif.lens || '35mm Summilux'}</span>
                 </div>
-                <div className="flex justify-between border-b border-neutral-900 pb-1">
-                  <span className="text-neutral-400">Aperture</span>
-                  <span className="text-white">{lightboxPhoto.exif.aperture || 'f/2.0'}</span>
+                <div className="flex justify-between border-b border-white/5 pb-1">
+                  <span className="text-slate-400">Aperture</span>
+                  <span className="text-[#66d9ff]">{lightboxPhoto.exif.aperture || 'f/2.0'}</span>
                 </div>
-                <div className="flex justify-between border-b border-neutral-900 pb-1">
-                  <span className="text-neutral-400">Shutter</span>
+                <div className="flex justify-between border-b border-white/5 pb-1">
+                  <span className="text-slate-400">Shutter</span>
                   <span className="text-white">{lightboxPhoto.exif.shutterSpeed || '1/250s'}</span>
                 </div>
-                <div className="flex justify-between border-b border-neutral-900 pb-1">
-                  <span className="text-neutral-400">ISO</span>
+                <div className="flex justify-between border-b border-white/5 pb-1">
+                  <span className="text-slate-400">ISO</span>
                   <span className="text-white">{lightboxPhoto.exif.iso || '160'}</span>
                 </div>
-                <div className="flex justify-between border-b border-neutral-900 pb-1">
-                  <span className="text-neutral-400">Location</span>
+                <div className="flex justify-between border-b border-white/5 pb-1">
+                  <span className="text-slate-400">Location</span>
                   <span className="text-white">{lightboxPhoto.exif.location || 'Studio'}</span>
                 </div>
                 <div className="flex justify-between pt-1">
-                  <span className="text-neutral-400">Archival Size</span>
-                  <span className="text-white">{lightboxPhoto.fileSize || '18.4 MB'}</span>
+                  <span className="text-slate-400">Archival Size</span>
+                  <span className="text-[#a5e9ff] font-semibold">{lightboxPhoto.fileSize || '18.4 MB'}</span>
                 </div>
               </div>
             </div>
 
             {/* Direct Send button */}
-            <button
-              onClick={() => {
-                setLightboxPhoto(null);
-                setIsTransferModalOpen(true);
-              }}
-              className="flex w-full items-center justify-center gap-2 border border-white bg-white py-2 text-xs font-semibold tracking-wider uppercase text-black transition-colors hover:bg-neutral-200"
+            <a
+              href="https://noirarchive.onrender.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#66d9ff] to-[#38bdf8] py-2.5 text-xs font-bold tracking-wider uppercase text-[#050b14] transition-all hover:shadow-[0_0_20px_rgba(102,217,255,0.4)] no-underline"
             >
-              <Send className="h-3.5 w-3.5" />
-              Send to Client / Peer
-            </button>
+              <Send className="h-3.5 w-3.5 stroke-[2.5]" />
+              <span>Launch In Web App</span>
+            </a>
           </div>
         </div>
       </div>

@@ -11,68 +11,49 @@ import { YapinFeatures } from './components/YapinFeatures';
 import { YapinCtaCard } from './components/YapinCtaCard';
 import { YapinFaq } from './components/YapinFaq';
 import { YapinFooter } from './components/YapinFooter';
-import { DownloadModal } from './components/DownloadModal';
-import { LoginDisabledModal } from './components/LoginDisabledModal';
 import { DevelopersModal } from './components/ExtraModals';
 import { LightboxModal } from './components/LightboxModal';
 
 const AppContent: React.FC = () => {
   const { theme, toggleTheme } = useApp();
-
-  const [isDownloadOpen, setIsDownloadOpen] = useState(false);
-  const [isLoginDisabledOpen, setIsLoginDisabledOpen] = useState(false);
   const [isDevelopersOpen, setIsDevelopersOpen] = useState(false);
 
   return (
-    <div className={`min-h-screen flex flex-col justify-between selection:bg-[#ff6b00] selection:text-black ${
-      theme === 'light' ? 'bg-[#fcf8f5] text-stone-900' : 'bg-[#090503] text-white'
-    }`}>
+    <div
+      className={`min-h-screen flex flex-col justify-between selection:bg-[#66d9ff] selection:text-[#050b14] transition-colors duration-300 ${
+        theme === 'light'
+          ? 'bg-[#f4faff] text-slate-900'
+          : 'bg-[#050b14] text-[#f4faff]'
+      }`}
+    >
       <div>
-        {/* Navbar */}
+        {/* Navigation Bar */}
         <YapinNavbar
           theme={theme}
           onToggleTheme={toggleTheme}
-          onOpenDownload={() => setIsDownloadOpen(true)}
           onOpenDevelopers={() => setIsDevelopersOpen(true)}
-          onOpenLoginModal={() => setIsLoginDisabledOpen(true)}
         />
 
-        {/* Hero Section with Motion animations */}
-        <YapinHero
-          onOpenDownload={() => setIsDownloadOpen(true)}
-        />
+        {/* Impressive Full-Screen Winter Ice Hero */}
+        <YapinHero />
 
-        {/* Discover & Team Directories sections */}
+        {/* Feature Bento & Community Directory Sections */}
         <YapinFeatures />
 
-        {/* "Come archive." CTA Card */}
-        <YapinCtaCard
-          onOpenDownload={() => setIsDownloadOpen(true)}
-        />
+        {/* "Your Digital World. Without Limits." CTA Card */}
+        <YapinCtaCard />
 
-        {/* "Questions." Accordion FAQ */}
+        {/* "Questions & Answers" FAQ Accordion */}
         <YapinFaq />
       </div>
 
       {/* Footer */}
       <YapinFooter
-        onOpenDownload={() => setIsDownloadOpen(true)}
         onOpenDevelopers={() => setIsDevelopersOpen(true)}
       />
 
       {/* Interactive Modals */}
       <LightboxModal />
-
-      <DownloadModal
-        isOpen={isDownloadOpen}
-        onClose={() => setIsDownloadOpen(false)}
-      />
-
-      <LoginDisabledModal
-        isOpen={isLoginDisabledOpen}
-        onClose={() => setIsLoginDisabledOpen(false)}
-        onOpenDownload={() => setIsDownloadOpen(true)}
-      />
 
       <DevelopersModal
         isOpen={isDevelopersOpen}

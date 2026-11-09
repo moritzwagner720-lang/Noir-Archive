@@ -1,172 +1,202 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ArrowUpRight, Sparkles, Terminal, Shield, CheckCircle } from 'lucide-react';
 import { NavigationIconImg } from './Icons';
-import { downloadSetupExe } from '../utils/downloadSetup';
 
 interface YapinFooterProps {
-  onOpenDownload: () => void;
+  onOpenDownload?: () => void;
   onOpenDevelopers: () => void;
 }
 
 export const YapinFooter: React.FC<YapinFooterProps> = ({
-  onOpenDownload,
   onOpenDevelopers,
 }) => {
-  const [notice, setNotice] = React.useState<string | null>(null);
-
-  const triggerDownload = () => {
-    downloadSetupExe();
-  };
+  const [notice, setNotice] = useState<string | null>(null);
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/[0.08] bg-[#090a0d] pt-16 pb-12 text-white">
-      
-      {/* Main Footer Container */}
+    <footer className="relative overflow-hidden border-t border-[#38bdf8]/15 bg-[#050b14] pt-20 pb-12 text-[#f4faff]">
+      {/* Subtle background glow */}
+      <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 h-64 w-[800px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.1)_0%,transparent_75%)] blur-[100px]" />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14">
-          
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
           {/* Brand Info (Left Column) */}
           <div className="md:col-span-5 max-w-sm">
-            <div className="flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-2xl bg-[#ff6b00] p-1.5 flex items-center justify-center shadow-lg shadow-orange-500/30">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-[#66d9ff] to-[#0284c7] p-2 flex items-center justify-center shadow-[0_0_25px_rgba(102,217,255,0.4)] ring-1 ring-white/30">
                 <NavigationIconImg className="h-6 w-6 object-contain" />
               </div>
-              <span className="font-sans text-xl font-extrabold tracking-tight text-white">
-                Noir Archive
-              </span>
+              <div className="flex flex-col">
+                <span className="font-sans text-xl font-black tracking-tight text-white">
+                  NOIR ARCHIVE
+                </span>
+                <span className="font-mono text-[9px] uppercase tracking-widest text-[#a5e9ff]/70 -mt-0.5">
+                  Lossless Digital Storage
+                </span>
+              </div>
             </div>
 
-            <p className="mt-4 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              A minimalist high-speed file vault and zero-compression digital archive.
+            <p className="mt-5 text-sm text-slate-400 leading-relaxed">
+              A high-speed digital vault and zero-compression web application. Preserving original file integrity, embedded EXIF metadata, and direct client pipelines.
             </p>
+
+            <div className="mt-6 flex items-center gap-2.5 rounded-full border border-[#38bdf8]/20 bg-[#07111f] px-3.5 py-1.5 w-fit text-xs font-mono text-[#a5e9ff]">
+              <span className="h-2 w-2 rounded-full bg-[#66d9ff] animate-pulse" />
+              <span>Network Status: All Systems Operational</span>
+            </div>
           </div>
 
-          {/* 3 Columns: PRODUCT, COMMUNITY, LEGAL */}
+          {/* 3 Navigation Columns */}
           <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-xs">
-            
-            {/* Column 1: PRODUCT */}
+            {/* Column 1: PLATFORM */}
             <div>
-              <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-4">
-                PRODUCT
+              <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#66d9ff] mb-4">
+                PLATFORM
               </h4>
-              <ul className="space-y-2.5 text-neutral-300">
+              <ul className="space-y-3 text-slate-300">
                 <li>
                   <a
-                    href="https://github.com/moritzwagner720-lang/noir-archive-downloads/releases/tag/v1.0.0"
+                    href="https://noirarchive.onrender.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-white transition-colors text-left cursor-pointer no-underline block"
+                    className="flex items-center gap-1.5 hover:text-[#66d9ff] transition-colors no-underline"
                   >
-                    Download Desktop (.exe)
+                    <span>Launch Web App</span>
+                    <ArrowUpRight className="h-3 w-3" />
                   </a>
                 </li>
                 <li>
-                  <button onClick={onOpenDevelopers} className="hover:text-white transition-colors text-left cursor-pointer">
+                  <button
+                    onClick={onOpenDevelopers}
+                    className="hover:text-[#66d9ff] transition-colors text-left cursor-pointer"
+                  >
                     Developers & API
                   </button>
                 </li>
                 <li>
-                  <button onClick={triggerDownload} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Vault System
-                  </button>
+                  <a
+                    href="#features"
+                    className="hover:text-[#66d9ff] transition-colors text-left no-underline block"
+                  >
+                    Vault Capabilities
+                  </a>
                 </li>
                 <li>
-                  <button onClick={() => setNotice('FanKit: High-res badges & SVG logos are bundled in the repository.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    FanKit & Assets
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Roadmap: Offline desktop synchronization & batch hash verification.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Roadmap
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Security & Bug Bounty: Verified reports are handled with priority.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Bugs & Feedback
-                  </button>
-                </li>
-                <li>
-                  <div className="flex items-center gap-1.5 text-emerald-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>Status: Vault online</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 2: COMMUNITY */}
-            <div>
-              <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-4">
-                COMMUNITY
-              </h4>
-              <ul className="space-y-2.5 text-neutral-300">
-                <li>
-                  <button onClick={triggerDownload} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Public Archives
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Guidelines: Open data compliance & zero loss storage rules.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Guidelines
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Archive Engine: Direct streaming chunk router with SHA-256.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Archive Engine
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Partners: Independent studios, creative agencies, and developers.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Partners
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 3: LEGAL */}
-            <div>
-              <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-4">
-                LEGAL
-              </h4>
-              <ul className="space-y-2.5 text-neutral-300">
-                <li>
-                  <button onClick={() => setNotice('Terms: Free to use forever. Zero ad tracking, no data resale.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Terms
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Privacy: Client transfers are end-to-end encrypted with custom passwords.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Privacy
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Copyright: You retain 100% intellectual rights to all uploaded files.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Copyright
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setNotice('Security: TLS 1.3, SHA-256 verification, and strict access tokens.')} className="hover:text-white transition-colors text-left cursor-pointer">
-                    Security
-                  </button>
-                </li>
-                <li>
-                  <a href="mailto:support@noirarchive.gg" className="hover:text-white transition-colors text-left cursor-pointer no-underline block">
-                    Contact
+                  <a
+                    href="#architecture"
+                    className="hover:text-[#66d9ff] transition-colors text-left no-underline block"
+                  >
+                    Public Directory
                   </a>
                 </li>
               </ul>
             </div>
 
-          </div>
+            {/* Column 2: ECOSYSTEM */}
+            <div>
+              <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#66d9ff] mb-4">
+                ECOSYSTEM
+              </h4>
+              <ul className="space-y-3 text-slate-300">
+                <li>
+                  <a
+                    href="#network"
+                    className="hover:text-[#66d9ff] transition-colors text-left no-underline block"
+                  >
+                    Studio Network
+                  </a>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      setNotice('Open Data Compliance: Standard uncompressed format retention.')
+                    }
+                    className="hover:text-[#66d9ff] transition-colors text-left cursor-pointer"
+                  >
+                    Integrity Standard
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      setNotice('SHA-256 Checksums: Automatic validation on all incoming files.')
+                    }
+                    className="hover:text-[#66d9ff] transition-colors text-left cursor-pointer"
+                  >
+                    Fidelity Engine
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      setNotice('Creative Studios: Partner program for enterprise batch archives.')
+                    }
+                    className="hover:text-[#66d9ff] transition-colors text-left cursor-pointer"
+                  >
+                    Studio Partners
+                  </button>
+                </li>
+              </ul>
+            </div>
 
+            {/* Column 3: SECURITY & LEGAL */}
+            <div>
+              <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#66d9ff] mb-4">
+                SECURITY
+              </h4>
+              <ul className="space-y-3 text-slate-300">
+                <li>
+                  <button
+                    onClick={() =>
+                      setNotice('Security: Client deliveries protected with TLS 1.3 and AES-GCM.')
+                    }
+                    className="hover:text-[#66d9ff] transition-colors text-left cursor-pointer"
+                  >
+                    Encryption Specs
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      setNotice('Privacy: No telemetry tracking, zero ad cookies, absolute confidentiality.')
+                    }
+                    className="hover:text-[#66d9ff] transition-colors text-left cursor-pointer"
+                  >
+                    Privacy Policy
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      setNotice('Terms: Free web application with perpetual archive access.')
+                    }
+                    className="hover:text-[#66d9ff] transition-colors text-left cursor-pointer"
+                  >
+                    Terms of Service
+                  </button>
+                </li>
+                <li>
+                  <a
+                    href="mailto:contact@noirarchive.onrender.com"
+                    className="hover:text-[#66d9ff] transition-colors text-left no-underline block"
+                  >
+                    Contact Support
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        {/* Temporary non-intrusive notice banner */}
+        {/* Temporary Notice Banner */}
         {notice && (
-          <div className="mt-8 rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-2.5 text-xs text-[#ff6b00] flex items-center justify-between">
-            <span>{notice}</span>
+          <div className="mt-8 rounded-2xl border border-[#38bdf8]/30 bg-[#07111f] px-5 py-3 text-xs text-[#a5e9ff] flex items-center justify-between shadow-lg">
+            <span className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-[#66d9ff]" />
+              {notice}
+            </span>
             <button
               onClick={() => setNotice(null)}
-              className="text-neutral-400 hover:text-white ml-3 font-mono text-xs cursor-pointer"
+              className="text-slate-400 hover:text-white ml-4 font-mono text-xs cursor-pointer"
             >
               Dismiss
             </button>
@@ -174,15 +204,12 @@ export const YapinFooter: React.FC<YapinFooterProps> = ({
         )}
 
         {/* Bottom Row */}
-        <div className="mt-16 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-neutral-500">
-          <div>
-            © 2026 Noir Archive LLC. Free to use.
-          </div>
-          <div className="text-neutral-400">
-            Made for teams & creators who deliver.
+        <div className="mt-16 pt-8 border-t border-[#38bdf8]/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+          <div>© 2026 Noir Archive. All rights reserved.</div>
+          <div className="text-slate-400">
+            Engineered for lossless digital storage & uncompressed media delivery.
           </div>
         </div>
-
       </div>
     </footer>
   );
